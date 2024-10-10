@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { FontLoader } from "three/addons/loaders/FontLoader.js";
 
 interface ThreeDTextProps {
   text: string;
@@ -13,30 +13,37 @@ const ThreeDText: React.FC<ThreeDTextProps> = ({ text }) => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    let camera: THREE.PerspectiveCamera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
+    let camera: THREE.PerspectiveCamera,
+      scene: THREE.Scene,
+      renderer: THREE.WebGLRenderer;
     let controls: OrbitControls;
 
     const init = () => {
-      camera = new THREE.PerspectiveCamera(45, containerRef.current!.clientWidth / containerRef.current!.clientHeight, 1, 10000);
+      camera = new THREE.PerspectiveCamera(
+        45,
+        containerRef.current!.clientWidth / containerRef.current!.clientHeight,
+        1,
+        10000,
+      );
       camera.position.set(0, 0, 600); // Adjusted camera position to better view the text
 
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0xf0f0f0);
 
       const loader = new FontLoader();
-      loader.load('fonts/helvetiker_regular.typeface.json', (font) => {
+      loader.load("fonts/helvetiker_regular.typeface.json", (font) => {
         const color = 0x006699;
 
         const matDark = new THREE.LineBasicMaterial({
           color: color,
-          side: THREE.DoubleSide
+          side: THREE.DoubleSide,
         });
 
         const matLite = new THREE.MeshBasicMaterial({
           color: color,
           transparent: true,
           opacity: 0.8, // Increased opacity for better visibility
-          side: THREE.DoubleSide
+          side: THREE.DoubleSide,
         });
 
         const shapes = font.generateShapes(text, 100);
@@ -45,7 +52,8 @@ const ThreeDText: React.FC<ThreeDTextProps> = ({ text }) => {
         geometry.computeBoundingBox();
 
         if (geometry.boundingBox) {
-          const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+          const xMid =
+            -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
           geometry.translate(xMid, 0, 0);
         }
 
@@ -77,7 +85,9 @@ const ThreeDText: React.FC<ThreeDTextProps> = ({ text }) => {
           const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
           if (lineGeometry.boundingBox) {
-            const xMid = -0.5 * (lineGeometry.boundingBox.max.x - lineGeometry.boundingBox.min.x);
+            const xMid =
+              -0.5 *
+              (lineGeometry.boundingBox.max.x - lineGeometry.boundingBox.min.x);
             lineGeometry.translate(xMid, 0, 0);
           }
 
@@ -91,21 +101,28 @@ const ThreeDText: React.FC<ThreeDTextProps> = ({ text }) => {
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(containerRef.current!.clientWidth, containerRef.current!.clientHeight);
+      renderer.setSize(
+        containerRef.current!.clientWidth,
+        containerRef.current!.clientHeight,
+      );
       containerRef.current!.appendChild(renderer.domElement);
 
       controls = new OrbitControls(camera, renderer.domElement);
       controls.target.set(0, 0, 0);
       controls.update();
 
-      controls.addEventListener('change', render);
-      window.addEventListener('resize', onWindowResize);
+      controls.addEventListener("change", render);
+      window.addEventListener("resize", onWindowResize);
     };
 
     const onWindowResize = () => {
-      camera.aspect = containerRef.current!.clientWidth / containerRef.current!.clientHeight;
+      camera.aspect =
+        containerRef.current!.clientWidth / containerRef.current!.clientHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(containerRef.current!.clientWidth, containerRef.current!.clientHeight);
+      renderer.setSize(
+        containerRef.current!.clientWidth,
+        containerRef.current!.clientHeight,
+      );
       render();
     };
 
@@ -116,15 +133,15 @@ const ThreeDText: React.FC<ThreeDTextProps> = ({ text }) => {
     init();
 
     return () => {
-      window.removeEventListener('resize', onWindowResize);
-      controls.removeEventListener('change', render);
+      window.removeEventListener("resize", onWindowResize);
+      controls.removeEventListener("change", render);
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
     };
   }, [text]);
 
-  return <div ref={containerRef} style={{ width: '100%', height: '300px' }} />;
+  return <div ref={containerRef} style={{ width: "100%", height: "300px" }} />;
 };
 
 export default ThreeDText;

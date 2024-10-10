@@ -1,7 +1,13 @@
-'use client'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaTwitter, FaFileAlt, FaEnvelope } from 'react-icons/fa';
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaFileAlt,
+  FaEnvelope,
+} from "react-icons/fa";
 
 // Add this type definition at the top of the file
 type NavLink = {
@@ -12,19 +18,26 @@ type NavLink = {
 
 // Update the type of your links array
 const links: NavLink[] = [
-    { name: 'github',  url: 'https://github.com/rishabredhu', icon: FaGithub },
-    { name: 'linkedin', url: 'https://www.linkedin.com/in/rishabredhuu/', icon: FaLinkedin },
-    { name: 'email', url: 'mailto:rishabredhu@gmail.com', icon: FaEnvelope },
-    { name: 'resume', url: 'https://www.dropbox.com/scl/fi/8788fi9wqen0i819xvgcl/resume_RishabNG.pdf?rlkey=21yrb3ilpqrv105tm2ycljuxy&st=nyz59zg2&dl=0', icon: FaFileAlt },
-    
-  ];
+  { name: "github", url: "https://github.com/rishabredhu", icon: FaGithub },
+  {
+    name: "linkedin",
+    url: "https://www.linkedin.com/in/rishabredhuu/",
+    icon: FaLinkedin,
+  },
+  { name: "email", url: "mailto:rishabredhu@gmail.com", icon: FaEnvelope },
+  {
+    name: "resume",
+    url: "https://www.dropbox.com/scl/fi/8788fi9wqen0i819xvgcl/resume_RishabNG.pdf?rlkey=21yrb3ilpqrv105tm2ycljuxy&st=nyz59zg2&dl=0",
+    icon: FaFileAlt,
+  },
+];
 
 /**
  * FlowerNavbar component
- * 
+ *
  * This component renders a navigation bar with animated icons for various links.
  * The icons are displayed in a row and have hover and tap animations.
- * 
+ *
  * @returns {JSX.Element} The rendered FlowerNavbar component
  */
 export default function Navbar() {
@@ -52,12 +65,15 @@ export default function Navbar() {
               className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-200 via-green-500 to-blue-500 opacity-0"
               initial={false}
               animate={{ opacity: [0, 0.5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'reverse' }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
             />
           </motion.a>
         ))}
       </motion.div>
-
     </nav>
-  )
+  );
 }

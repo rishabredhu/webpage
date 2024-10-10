@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Gamepad2, Send, Power } from 'lucide-react'
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Gamepad2, Send, Power } from "lucide-react";
 
 type Message = {
   text: string;
@@ -12,30 +12,39 @@ type Message = {
 };
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { text: "Rishab's Bot will be here soon! PRESS START TO BEGIN!", sender: 'game' }
-  ])
-  const [input, setInput] = useState('')
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
+    {
+      text: "Rishab's Bot will be here soon! PRESS START TO BEGIN!",
+      sender: "game",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
   const handleSend = () => {
-    if (input.trim() === '') return
+    if (input.trim() === "") return;
 
-    const newMessages: Message[] = [...messages, { text: input.toUpperCase(), sender: 'player' as const }];
+    const newMessages: Message[] = [
+      ...messages,
+      { text: input.toUpperCase(), sender: "player" as const },
+    ];
     setMessages(newMessages);
-    setInput('');
+    setInput("");
 
     setTimeout(() => {
-      setMessages([...newMessages, { text: `PROCESSING: "${input.toUpperCase()}"`, sender: 'game' }]);
+      setMessages([
+        ...newMessages,
+        { text: `PROCESSING: "${input.toUpperCase()}"`, sender: "game" },
+      ]);
     }, 500);
-  }
+  };
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -44,9 +53,9 @@ export default function Chatbot() {
           <div className="bg-[#39FF14] text-black p-2 font-bold text-center flex items-center justify-between">
             <Gamepad2 className="w-6 h-6" />
             <span>RETRO ARCADE CHAT</span>
-            <Button 
+            <Button
               size="sm"
-              variant="secondary" 
+              variant="secondary"
               className="text-black hover:bg-[#32CD32] p-2"
               onClick={() => setIsOpen(false)}
             >
@@ -58,14 +67,14 @@ export default function Chatbot() {
               <div
                 key={index}
                 className={`mb-2 ${
-                  message.sender === 'player' ? 'text-right' : 'text-left'
+                  message.sender === "player" ? "text-right" : "text-left"
                 }`}
               >
                 <span
                   className={`inline-block p-2 ${
-                    message.sender === 'player'
-                      ? 'text-[#FF00FF]'
-                      : 'text-[#00FFFF]'
+                    message.sender === "player"
+                      ? "text-[#FF00FF]"
+                      : "text-[#00FFFF]"
                   }`}
                 >
                   {message.text}
@@ -76,8 +85,8 @@ export default function Chatbot() {
           <div className="p-2 bg-[#39FF14]">
             <form
               onSubmit={(e) => {
-                e.preventDefault()
-                handleSend()
+                e.preventDefault();
+                handleSend();
               }}
               className="flex space-x-2"
             >
@@ -107,5 +116,5 @@ export default function Chatbot() {
         </Button>
       )}
     </div>
-  )
+  );
 }

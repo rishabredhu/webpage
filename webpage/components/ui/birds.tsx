@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import Stats from 'three/addons/libs/stats.module.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { DecalGeometry } from 'three/addons/geometries/DecalGeometry.js';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import Stats from "three/addons/libs/stats.module.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DecalGeometry } from "three/addons/geometries/DecalGeometry.js";
 
 const Birds: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -15,7 +15,10 @@ const Birds: React.FC = () => {
       throw new Error("Container element not found");
     }
 
-    let renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.PerspectiveCamera, stats: Stats;
+    let renderer: THREE.WebGLRenderer,
+      scene: THREE.Scene,
+      camera: THREE.PerspectiveCamera,
+      stats: Stats;
     let mesh: THREE.Mesh;
     let raycaster: THREE.Raycaster;
     let line: THREE.Line;
@@ -23,15 +26,15 @@ const Birds: React.FC = () => {
     const intersection = {
       intersects: false,
       point: new THREE.Vector3(),
-      normal: new THREE.Vector3()
+      normal: new THREE.Vector3(),
     };
     const mouse = new THREE.Vector2();
     const intersects: THREE.Intersection[] = [];
 
     const textureLoader = new THREE.TextureLoader();
-    const decalDiffuse = textureLoader.load('textures/decal/decal-diffuse.png');
+    const decalDiffuse = textureLoader.load("textures/decal/decal-diffuse.png");
     decalDiffuse.colorSpace = THREE.SRGBColorSpace;
-    const decalNormal = textureLoader.load('textures/decal/decal-normal.jpg');
+    const decalNormal = textureLoader.load("textures/decal/decal-normal.jpg");
 
     const decalMaterial = new THREE.MeshPhongMaterial({
       specular: 0x444444,
@@ -44,7 +47,7 @@ const Birds: React.FC = () => {
       depthWrite: false,
       polygonOffset: true,
       polygonOffsetFactor: -4,
-      wireframe: false
+      wireframe: false,
     });
 
     const decals: THREE.Mesh[] = [];
@@ -59,7 +62,7 @@ const Birds: React.FC = () => {
       rotate: true,
       clear: function () {
         removeDecals();
-      }
+      },
     };
 
     init();
@@ -78,7 +81,12 @@ const Birds: React.FC = () => {
 
       scene = new THREE.Scene();
 
-      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000,
+      );
       camera.position.z = 120;
 
       const controls = new OrbitControls(camera, renderer.domElement);
@@ -105,30 +113,33 @@ const Birds: React.FC = () => {
 
       raycaster = new THREE.Raycaster();
 
-      mouseHelper = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 10), new THREE.MeshNormalMaterial());
+      mouseHelper = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 10),
+        new THREE.MeshNormalMaterial(),
+      );
       mouseHelper.visible = false;
       scene.add(mouseHelper);
 
-      window.addEventListener('resize', onWindowResize);
+      window.addEventListener("resize", onWindowResize);
 
       let moved = false;
 
-      controls.addEventListener('change', function () {
+      controls.addEventListener("change", function () {
         moved = true;
       });
 
-      window.addEventListener('pointerdown', function () {
+      window.addEventListener("pointerdown", function () {
         moved = false;
       });
 
-      window.addEventListener('pointerup', function (event) {
+      window.addEventListener("pointerup", function (event) {
         if (moved === false) {
           checkIntersection(event.clientX, event.clientY);
           if (intersection.intersects) shoot();
         }
       });
 
-      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener("pointermove", onPointerMove);
 
       function onPointerMove(event: PointerEvent) {
         if (event.isPrimary) {
@@ -150,7 +161,9 @@ const Birds: React.FC = () => {
           mouseHelper.position.copy(p);
           intersection.point.copy(p);
 
-          const normalMatrix = new THREE.Matrix3().getNormalMatrix(mesh.matrixWorld);
+          const normalMatrix = new THREE.Matrix3().getNormalMatrix(
+            mesh.matrixWorld,
+          );
 
           const n = intersects[0].face!.normal.clone();
           n.applyNormalMatrix(normalMatrix);
@@ -175,26 +188,33 @@ const Birds: React.FC = () => {
     }
 
     function loadLeePerrySmith() {
-      const map = textureLoader.load('models/gltf/LeePerrySmith/Map-COL.jpg');
+      const map = textureLoader.load("models/gltf/LeePerrySmith/Map-COL.jpg");
       map.colorSpace = THREE.SRGBColorSpace;
-      const specularMap = textureLoader.load('models/gltf/LeePerrySmith/Map-SPEC.jpg');
-      const normalMap = textureLoader.load('models/gltf/LeePerrySmith/Infinite-Level_02_Tangent_SmoothUV.jpg');
+      const specularMap = textureLoader.load(
+        "models/gltf/LeePerrySmith/Map-SPEC.jpg",
+      );
+      const normalMap = textureLoader.load(
+        "models/gltf/LeePerrySmith/Infinite-Level_02_Tangent_SmoothUV.jpg",
+      );
 
       const loader = new GLTFLoader();
 
-      loader.load('models/gltf/LeePerrySmith/LeePerrySmith.glb', function (gltf) {
-        mesh = gltf.scene.children[0] as THREE.Mesh;
-        mesh.material = new THREE.MeshPhongMaterial({
-          specular: 0x111111,
-          map: map,
-          specularMap: specularMap,
-          normalMap: normalMap,
-          shininess: 25
-        });
+      loader.load(
+        "models/gltf/LeePerrySmith/LeePerrySmith.glb",
+        function (gltf) {
+          mesh = gltf.scene.children[0] as THREE.Mesh;
+          mesh.material = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: map,
+            specularMap: specularMap,
+            normalMap: normalMap,
+            shininess: 25,
+          });
 
-        scene.add(mesh);
-        mesh.scale.multiplyScalar(10);
-      });
+          scene.add(mesh);
+          mesh.scale.multiplyScalar(10);
+        },
+      );
     }
 
     function shoot() {
@@ -203,13 +223,17 @@ const Birds: React.FC = () => {
 
       if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
 
-      const scale = params.minScale + Math.random() * (params.maxScale - params.minScale);
+      const scale =
+        params.minScale + Math.random() * (params.maxScale - params.minScale);
       size.set(scale, scale, scale);
 
       const material = decalMaterial.clone();
       material.color.setHex(Math.random() * 0xffffff);
 
-      const m = new THREE.Mesh(new DecalGeometry(mesh, position, orientation, size), material);
+      const m = new THREE.Mesh(
+        new DecalGeometry(mesh, position, orientation, size),
+        material,
+      );
       m.renderOrder = decals.length; // give decals a fixed render order
 
       decals.push(m);
@@ -238,15 +262,15 @@ const Birds: React.FC = () => {
     }
 
     return () => {
-      window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('pointerdown', () => {});
-      window.removeEventListener('pointerup', () => {});
-      window.removeEventListener('pointermove', () => {});
+      window.removeEventListener("resize", onWindowResize);
+      window.removeEventListener("pointerdown", () => {});
+      window.removeEventListener("pointerup", () => {});
+      window.removeEventListener("pointermove", () => {});
       container.removeChild(renderer.domElement);
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: '100%', height: '100vh' }} />;
+  return <div ref={mountRef} style={{ width: "100%", height: "100vh" }} />;
 };
 
 export default Birds;

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { useThree, extend } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { useThree, extend } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
 
 // Extend OrbitControls so it's available as a JSX element
 extend({ OrbitControls });
@@ -14,55 +14,62 @@ const Faces2: React.FC = () => {
   useEffect(() => {
     const API = { thickness: 10 };
 
-    new THREE.BufferGeometryLoader().load('json/WaltHeadLo_buffergeometry.json', (geometry) => {
-      geometry.deleteAttribute('normal');
-      geometry.deleteAttribute('uv');
+    new THREE.BufferGeometryLoader().load(
+      "json/WaltHeadLo_buffergeometry.json",
+      (geometry) => {
+        geometry.deleteAttribute("normal");
+        geometry.deleteAttribute("uv");
 
-      setupAttributes(geometry);
+        setupAttributes(geometry);
 
-      // Create materials
-      const material1 = new THREE.MeshBasicMaterial({
-        color: 0x000000, // Set color to black
-        wireframe: true,
-      });
+        // Create materials
+        const material1 = new THREE.MeshBasicMaterial({
+          color: 0x000000, // Set color to black
+          wireframe: true,
+        });
 
-      const material2 = new THREE.ShaderMaterial({
-        uniforms: { thickness: { value: API.thickness } },
-        vertexShader: vertexShaderSource,
-        fragmentShader: fragmentShaderSource,
-        side: THREE.DoubleSide,
-        alphaToCoverage: true,
-      });
+        const material2 = new THREE.ShaderMaterial({
+          uniforms: { thickness: { value: API.thickness } },
+          vertexShader: vertexShaderSource,
+          fragmentShader: fragmentShaderSource,
+          side: THREE.DoubleSide,
+          alphaToCoverage: true,
+        });
 
-      // Create meshes
-      const mesh1 = new THREE.Mesh(geometry, material1);
-      mesh1.position.set(-40, 0, 0);
-      scene.add(mesh1);
+        // Create meshes
+        const mesh1 = new THREE.Mesh(geometry, material1);
+        mesh1.position.set(-40, 0, 0);
+        scene.add(mesh1);
 
-      if (meshRef.current) {
-        meshRef.current.geometry = geometry;
-        meshRef.current.material = material2;
-        meshRef.current.position.set(40, 0, 0);
-      }
-
-      // GUI setup
-      const gui = new GUI();
-      gui.add(API, 'thickness', 0, 4).onChange(() => {
         if (meshRef.current) {
-          (meshRef.current.material as THREE.ShaderMaterial).uniforms.thickness.value = API.thickness;
+          meshRef.current.geometry = geometry;
+          meshRef.current.material = material2;
+          meshRef.current.position.set(40, 0, 0);
         }
-      });
-      gui.open();
-    });
 
-    return () => {
-      
-    };
+        // GUI setup
+        const gui = new GUI();
+        gui.add(API, "thickness", 0, 4).onChange(() => {
+          if (meshRef.current) {
+            (
+              meshRef.current.material as THREE.ShaderMaterial
+            ).uniforms.thickness.value = API.thickness;
+          }
+        });
+        gui.open();
+      },
+    );
+
+    return () => {};
   }, [scene]);
 
   return (
     <>
-      <OrbitControls args={[camera, gl.domElement]} enablePan={false} enableZoom={false} />
+      <OrbitControls
+        args={[camera, gl.domElement]}
+        enablePan={false}
+        enableZoom={false}
+      />
       <mesh ref={meshRef} />
     </>
   );
@@ -83,7 +90,7 @@ const setupAttributes = (geometry: THREE.BufferGeometry) => {
     vectors[i % 3].toArray(centers, i * 3);
   }
 
-  geometry.setAttribute('center', new THREE.BufferAttribute(centers, 3));
+  geometry.setAttribute("center", new THREE.BufferAttribute(centers, 3));
 };
 
 // Shader sources

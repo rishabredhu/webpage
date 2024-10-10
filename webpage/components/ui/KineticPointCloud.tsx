@@ -1,5 +1,5 @@
 // Reference: https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry_instancing.html
-'use client'
+"use client";
 import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -49,8 +49,8 @@ const KinectPointCloud: React.FC = () => {
     video.src = "/videos/kinect.webm"; // Update with your video path
     video.loop = true;
     video.muted = true;
-    video.setAttribute('playsinline', 'playsinline'); // Ensure the video plays inline on mobile devices
-    video.play().catch(error => {
+    video.setAttribute("playsinline", "playsinline"); // Ensure the video plays inline on mobile devices
+    video.play().catch((error) => {
       console.error("Error playing video:", error);
     });
     return new THREE.VideoTexture(video);

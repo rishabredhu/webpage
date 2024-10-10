@@ -1,9 +1,9 @@
-import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
-import { Plane, OrbitControls } from '@react-three/drei';
-import { Suspense, useEffect, useRef } from 'react';
-import { extend } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three";
+import { Plane, OrbitControls } from "@react-three/drei";
+import { Suspense, useEffect, useRef } from "react";
+import { extend } from "@react-three/fiber";
 
 // Extend the Canvas component to avoid the error
 extend({ Canvas });
@@ -12,7 +12,7 @@ extend({ Canvas });
 const CameraLogger = () => {
   const { camera } = useThree();
   useFrame(() => {
-    console.log('Camera position:', camera.position);
+    console.log("Camera position:", camera.position);
   });
   return null;
 };
@@ -21,13 +21,17 @@ export default function ThreeDImage() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    console.log('ThreeDImage component mounted');
-    
+    console.log("ThreeDImage component mounted");
+
     // Override console.error to suppress specific errors
     const originalConsoleError = console.error;
     console.error = (...args) => {
-      if (args[0] && typeof args[0] === 'string' && args[0].includes('Next.js routing')) {
-        console.log('Suppressed Next.js routing error:', args[0]);
+      if (
+        args[0] &&
+        typeof args[0] === "string" &&
+        args[0].includes("Next.js routing")
+      ) {
+        console.log("Suppressed Next.js routing error:", args[0]);
         return;
       }
       originalConsoleError(...args);
@@ -36,8 +40,15 @@ export default function ThreeDImage() {
     // Override window.onerror to suppress specific errors
     const originalWindowOnError = window.onerror;
     window.onerror = (message, source, lineno, colno, error) => {
-      if (message && typeof message === 'string' && message.includes('Next.js routing')) {
-        console.log('Suppressed Next.js routing error in window.onerror:', message);
+      if (
+        message &&
+        typeof message === "string" &&
+        message.includes("Next.js routing")
+      ) {
+        console.log(
+          "Suppressed Next.js routing error in window.onerror:",
+          message,
+        );
         return true;
       }
       if (originalWindowOnError) {
@@ -48,24 +59,28 @@ export default function ThreeDImage() {
 
     // Cleanup function
     return () => {
-      console.log('ThreeDImage component unmounted');
+      console.log("ThreeDImage component unmounted");
       console.error = originalConsoleError;
       window.onerror = originalWindowOnError;
     };
   }, []);
 
-  const imgUrl = '/images/profile1.jpeg';
-  const depthUrl = '/images/profile1-depth.png';
+  const imgUrl = "/images/profile1.jpeg";
+  const depthUrl = "/images/profile1-depth.png";
 
   const [texture, depthMap] = useLoader(TextureLoader, [imgUrl, depthUrl]);
 
   useEffect(() => {
-    console.log('Texture loaded:', texture);
-    console.log('Depth map loaded:', depthMap);
+    console.log("Texture loaded:", texture);
+    console.log("Depth map loaded:", depthMap);
   }, [texture, depthMap]);
 
   return (
-    <Canvas ref={canvasRef} style={{ height: '100vh', width: '100vw' }} onCreated={(state) => console.log('Canvas created:', state)}>
+    <Canvas
+      ref={canvasRef}
+      style={{ height: "100vh", width: "100vw" }}
+      onCreated={(state) => console.log("Canvas created:", state)}
+    >
       <Suspense fallback={<DebugFallback />}>
         <CameraLogger />
         <pointLight position={[10, 10, 10]} />
@@ -77,7 +92,10 @@ export default function ThreeDImage() {
             displacementScale={0.5}
           />
         </Plane>
-        <OrbitControls enableZoom={true} onChange={() => console.log('OrbitControls changed')} />
+        <OrbitControls
+          enableZoom={true}
+          onChange={() => console.log("OrbitControls changed")}
+        />
       </Suspense>
     </Canvas>
   );
@@ -85,6 +103,6 @@ export default function ThreeDImage() {
 
 // Debug fallback component
 const DebugFallback = () => {
-  console.log('Fallback component rendered');
+  console.log("Fallback component rendered");
   return null;
 };

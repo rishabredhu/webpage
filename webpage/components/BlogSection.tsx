@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import ErrorBoundary from './ErrorBoundary'; // Import ErrorBoundary
+import ErrorBoundary from "./ErrorBoundary"; // Import ErrorBoundary
 import { Button } from "@/components/ui/button"; // Import Button component
 
 interface BlogPost {

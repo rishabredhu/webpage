@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import React from "react"
-import { motion } from "framer-motion"
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { FaQuoteLeft } from "react-icons/fa"
-import { Building2, GraduationCap, Briefcase } from "lucide-react"
+} from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { FaQuoteLeft } from "react-icons/fa";
+import { Building2, GraduationCap, Briefcase } from "lucide-react";
 
 interface Testimonial {
-  name: string
-  feedback: string
-  position: string
-  company: string
-  photoUrl?: string
-  school?: string
-  linkedinUrl?: string
-  country: string
+  name: string;
+  feedback: string;
+  position: string;
+  company: string;
+  photoUrl?: string;
+  school?: string;
+  linkedinUrl?: string;
+  country: string;
 }
 
 const TestimonialsSection: React.FC = () => {
@@ -38,7 +38,7 @@ const TestimonialsSection: React.FC = () => {
       linkedinUrl: "https://www.linkedin.com/in/yashbhojwani/",
       country: "United States",
     },
-    
+
     {
       name: "Vishwa Shah",
       feedback:
@@ -72,7 +72,7 @@ const TestimonialsSection: React.FC = () => {
       linkedinUrl: "https://www.linkedin.com/in/rachana-dereddy/",
       country: "United States",
     },
-  ]
+  ];
 
   return (
     <section className="py-20 bg-gray-50">
@@ -88,7 +88,10 @@ const TestimonialsSection: React.FC = () => {
         <Carousel className="w-full max-w-7xl mx-auto">
           <CarouselContent className="-ml-4">
             {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+              <CarouselItem
+                key={index}
+                className="pl-4 md:basis-1/2 lg:basis-1/3"
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -97,18 +100,29 @@ const TestimonialsSection: React.FC = () => {
                   <Card className="bg-white shadow-lg rounded-2xl overflow-hidden h-full">
                     <CardContent className="p-6 flex flex-col h-full">
                       <FaQuoteLeft className="text-gray-300 text-4xl mb-4" />
-                      <p className="text-gray-600 mb-6 flex-grow">{testimonial.feedback}</p>
+                      <p className="text-gray-600 mb-6 flex-grow">
+                        {testimonial.feedback}
+                      </p>
                       <div className="flex items-center mb-4">
                         <Avatar className="w-14 h-14 mr-4">
                           {testimonial.photoUrl ? (
-                            <AvatarImage src={testimonial.photoUrl} alt={testimonial.name} />
+                            <AvatarImage
+                              src={testimonial.photoUrl}
+                              alt={testimonial.name}
+                            />
                           ) : (
-                            <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                            <AvatarFallback>
+                              {testimonial.name.charAt(0)}
+                            </AvatarFallback>
                           )}
                         </Avatar>
                         <div>
-                          <h3 className="font-semibold text-gray-800">{testimonial.name}</h3>
-                          <p className="text-sm text-gray-500">{testimonial.country}</p>
+                          <h3 className="font-semibold text-gray-800">
+                            {testimonial.name}
+                          </h3>
+                          <p className="text-sm text-gray-500">
+                            {testimonial.country}
+                          </p>
                         </div>
                       </div>
                       <div className="space-y-2 text-sm text-gray-600">
@@ -138,7 +152,7 @@ const TestimonialsSection: React.FC = () => {
         </Carousel>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default TestimonialsSection
+export default TestimonialsSection;
