@@ -3,3 +3,14 @@
 @tailwind utilities;
 
 /* Add any global styles here */
+.depth-image-container {
+    perspective: 1000px; /* Add a 3D perspective effect */
+  }
+  
+  .depth-image {
+    transition: transform 0.5s ease;
+  }
+  
+  .depth-image:hover {
+    transform: rotateX(25deg) rotateY(25deg); /* Rotates more on hover */
+  }
