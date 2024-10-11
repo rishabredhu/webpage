@@ -6,11 +6,11 @@ import SkillsSection from "../components/SkillsSection";
 import ExperienceSection from "../components/ExperienceSection";
 import BlogSection from "../components/BlogSection";
 import TestimonialsSection from "../components/TestimonialsSection";
-import Chatbot from "../components/Chatbot";
+import Chatbot from "../components/ui/retro-chatbot";
 import { Canvas } from "@react-three/fiber";
 import KinectPointCloud from "@/components/ui/KineticPointCloud";
 import InstancedTriangles from "@/components/ui/InstancedTriangles";
-
+import LiquidBorder from "@/components/ui/LiquidBorder";
 export default function HomePage() {
   return (
     <>
@@ -31,13 +31,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+      <LiquidBorder />
+     
+      <Chatbot />
+      <ExperienceSection />
       <ProjectsSection />
       <SkillsSection />
-      <ExperienceSection />
-      <BlogSection />
+      
+      {/* <BlogSection /> */}
       <TestimonialsSection />
-      <Chatbot />
+      
     </>
   );
 }

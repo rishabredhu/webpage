@@ -14,3 +14,9 @@
 .depth-image:hover {
   transform: rotateX(25deg) rotateY(25deg); /* Rotates more on hover */
 }
+
+.element-to-style:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}

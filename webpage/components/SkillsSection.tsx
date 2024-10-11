@@ -56,7 +56,7 @@ const SkillCategory = ({ title, skills }: SkillCategory) => {
               onMouseLeave={() => setHoveredSkill(null)} // Reset hovered skill on mouse leave
             >
               <span
-                className={`inline-block px-2 py-1 text-xs cursor-pointer ${hoveredSkill === skill.name ? "bg-blue-500 text-white" : "bg-black text-white"}`}
+                className={`inline-block px-2 py-1 text-xs cursor-pointer ${hoveredSkill === skill.name ? "bg-purple-500 text-white" : "bg-black text-white"}`}
                 onClick={() =>
                   setExpandedSkill(
                     expandedSkill === skill.name ? null : skill.name,
@@ -124,12 +124,12 @@ export function ScrollableCategories({
             onClick={() => setCurrentIndex(index)}
             className={`
               relative px-6 py-3 text-sm font-semibold rounded-lg overflow-hidden group 
-              focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
+              focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75
               transition-all duration-300 ease-in-out
               ${
                 currentIndex === index
-                  ? "text-white bg-blue-600"
-                  : "text-blue-600 bg-transparent hover:text-white hover:bg-blue-600"
+                  ? "text-white bg-purple-600"
+                  : "text-purple-600 bg-transparent hover:text-white hover:bg-purple-600"
               }
             `}
           >
@@ -512,19 +512,32 @@ export default function SkillsSection() {
 
   return (
     <section className="py-16 bg-white text-black font-['Courier_New']">
+      
+      
+    
       <div className="container mx-auto px-4">
         {/* <h2 className="font-['Press_Start_2P'] text-2xl mb-8 text-center">SKILLS</h2> Section title */}
-        <ScrollableCategories
-          categories={categories.map((cat) => ({
-            name: cat.title,
-            skills: cat.skills.map((skill) => ({ name: skill.name })),
-          }))}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-        />
+        
+        <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
+            <span className="relative z-10 glitch block text-center" data-text="My Projects">
+             //// Runtime Capabilities //// [ Skills Section ] 
+            </span>
+          </h2>
+        
+        
+        <div className="flex justify-center">
+          <ScrollableCategories
+            categories={categories.map((cat) => ({
+              name: cat.title,
+              skills: cat.skills.map((skill) => ({ name: skill.name })),
+            }))}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+          />
+        </div>
         {currentIndex === categories.length - 1 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">
               {categories[currentIndex].skills
                 .slice(0, 2)
                 .map((category, index) => (
@@ -548,7 +561,7 @@ export default function SkillsSection() {
             <div className="flex justify-center mt-8">
               <Button
                 onClick={() => setShowAllSkills(!showAllSkills)}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none transition-all duration-150 ease-in-out"
+                className="bg-purple-500 hover:bg-blue-600 text-white font-bold py-2 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none transition-all duration-150 ease-in-out"
               >
                 <span className="text-xs pixelated">
                   {showAllSkills ? "Hide Additional Skills" : "Show All Skills"}

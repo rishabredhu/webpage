@@ -17,10 +17,13 @@ interface ProjectProps {
   id: string;
   title: string;
   description: string;
-  technologies: string[];
-  github_url: string;
-  demo_url: string;
-  image_url: string;
+  technologies: { name: string; description: string }[];
+  github_url: string | null;
+  research_url: string | null;
+  team_size: string;
+  highlight: string | null;
+  detailed_interview_description: string;
+  detailed_story_description: string;
 }
 
 const ProjectCard: React.FC<ProjectProps> = ({
@@ -28,8 +31,14 @@ const ProjectCard: React.FC<ProjectProps> = ({
   description,
   technologies,
   github_url,
-  demo_url, // Add this
+  research_url,
+  team_size,
+  highlight,
+  detailed_interview_description,
+  detailed_story_description,
 }) => {
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+
   return (
     <Card className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
       <CardHeader className="p-0"></CardHeader>
@@ -41,13 +50,24 @@ const ProjectCard: React.FC<ProjectProps> = ({
         <div className="flex flex-wrap gap-2 mb-4">
           {technologies.map((tech) => (
             <span
-              key={tech}
-              className="inline-block px-2 py-1 text-xs  bg-black text-white"
+              key={tech.name}
+              className="inline-block px-2 py-1 text-xs bg-black text-white relative"
+              onMouseEnter={() => setHoveredTech(tech.name)}
+              onMouseLeave={() => setHoveredTech(null)}
             >
-              {tech}
+              {tech.name}
+              {hoveredTech === tech.name && (
+                <span className="absolute top-full left-1/2 transform -translate-x-1 mt-1 px-2 py-1 bg-purple-200 text-black text-xs border-2 border-black z-10 font-['Press_Start_2P']">
+                  {tech.description}
+                </span>
+              )}
             </span>
           ))}
         </div>
+        <p className="font-['Courier_New'] text-sm mb-4">{highlight}</p>
+        <p className="font-['Courier_New'] text-sm mb-4">
+          Team Size: {team_size}
+        </p>
         <div className="flex justify-between w-full mt-auto">
           <Button
             variant="outline"
@@ -55,11 +75,24 @@ const ProjectCard: React.FC<ProjectProps> = ({
             className="text-xs border-2 border-black hover:bg-black hover:text-white transition-colors"
             asChild
           >
-            <a href={github_url} target="_blank" rel="noopener noreferrer">
+            <a href={github_url ?? '#'} target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" />
-              Github Link
+              Github
             </a>
           </Button>
+          {research_url && (
+            <Button
+              variant="outline"
+              size="md"
+              className="text-xs border-2 border-black hover:bg-black hover:text-white transition-colors"
+              asChild
+            >
+              <a href={research_url ?? '#'} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="mr-2 h-4 w-4" />
+                Research
+              </a>
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
@@ -71,29 +104,29 @@ const ProjectsSection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const client = await connectToDatabase();
-        const database = client.db("your_database_name");
-        const collection = database.collection("projects");
-        const data = await collection.find({}).toArray();
-
-        setProjects(data as ProjectProps[]);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
     fetchProjects();
   }, []);
 
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('/api/storage');
+      if (!response.ok) {
+        throw new Error('Failed to fetch projects from Storage');
+      }
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      setError((error as Error).message);
+    }
+  };
+
   return (
-    <section className="bg-white-200 py-20 ">
+    <section className="bg-white-200 py-20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
           <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
             <span className="relative z-10 glitch" data-text="My Projects">
-              My Projects
+              PROJECT DASHBOARD
             </span>
           </h2>
         </div>
@@ -106,6 +139,7 @@ const ProjectsSection: React.FC = () => {
             <span className="block sm:inline">{error}</span>
           </div>
         )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
             <ProjectCard key={project.id} {...project} />
