@@ -38,7 +38,7 @@ export default function RetroTestimonialsSection() {
       position: "Data Scientist",
       company: "Nucleix",
       school: "NorthEastern University",
-      photoUrl: "/images/yash.png",
+      photoUrl: "/images/yash.jpg",
       linkedinUrl: "https://www.linkedin.com/in/yashbhojwani/",
       country: "United States",
     },
