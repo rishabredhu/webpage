@@ -3,6 +3,14 @@ import Navbar from "../components/NavBar";
 import Footer from "../components/Footer";
 import "../app/globals.css"; // Add this line
 import Head from "next/head";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Rishab Singh',
+  icons: {
+    icon: '/image/avatar.png', // or '/favicon.png', '/icon.svg' etc.
+  },
+}
 
 interface LayoutProps {
   children: ReactNode;
