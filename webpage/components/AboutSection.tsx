@@ -13,7 +13,7 @@ import { RecentActivity } from "./RecentActivity";
 
 const AboutSection: React.FC = () => {
   return (
-    <section className="bg-white-200 py-20">
+    <section className="bg-white-200 py-10">
       <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
         <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
           <span className="relative z-10 glitch" data-text="About Me">

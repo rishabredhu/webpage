@@ -1,40 +1,41 @@
 import React, { useState } from "react";
-import {
-  FaUserSecret,
-  FaLaptopCode,
-  FaRobot,
-  FaMicrochip,
-  FaUniversity,
-  FaUser,
-  FaLightbulb,
-  FaBook,
-  FaGlobe,
-  FaLeaf,
-} from "react-icons/fa";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
+
+interface Experience {
+  title: string;
+  company: string;
+  startDate: Date;
+  endDate: Date;
+  description: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export default function ExperienceSection() {
   const [showAllExperiences, setShowAllExperiences] = useState(false);
 
-  const experiences = [
+  const experiences: Experience[] = [
     {
       title: "Lead Engineer",
       company: "Stealth Startup (Pre-Seed)",
-      startDate: new Date("2024-09-01"),
-      endDate: new Date("2024-12-31"),
+      startDate: new Date("2024-11-01"),
+      endDate: new Date("2025-03-15"), // Current date
       description:
         "Developing scalable APIs and optimizing server-side performance to handle dynamic content generation based on AI models. Working on data pipelines for AI training, enabling efficient data collection, preprocessing, and model deployment.",
-      icon: "FaUserSecret",
+      image: "/images/stealth.jpeg",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       title: "Software Engineer Fellow",
       company: "HeadStarter AI",
-      startDate: new Date("2024-06-01"),
+      startDate: new Date("2024-08-01"),
       endDate: new Date("2024-09-31"),
       description:
         "Implemented projects integrating OpenAI API and Gemini API with Firebase backend and Next.js frontend.",
-      icon: "FaLaptopCode",
+      image: "/images/headstarter.jpeg",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -45,7 +46,7 @@ export default function ExperienceSection() {
       endDate: new Date("2024-10-31"),
       description:
         "Optimized data collection and ELT processes with GCP Dataflow, reducing processing time by 45% and increasing throughput. Integrated AI features using React, Next.js, TypeScript, and LangChain, improving API response times and user engagement.",
-      icon: "FaRobot",
+      image: "/images/radical.jpeg",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -56,18 +57,18 @@ export default function ExperienceSection() {
       endDate: new Date("2023-05-31"),
       description:
         "Engineered a high-throughput data pipeline for real-time iGPU performance analysis. Developed an interactive analytical dashboard for rapid visualization of key performance metrics.",
-      icon: "FaMicrochip",
+      image: "/images/intel.webp",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       title: "Research Assistant",
-      company: "NYU",
+      company: "Center of Urban Science and Progress, NYU",
       startDate: new Date("2022-06-01"),
       endDate: new Date("2022-12-31"),
       description:
         "Developed scalable ETL pipelines and optimized data storage solutions on AWS. Created interactive dashboards and automated data pipelines for sentiment analysis and topic modeling.",
-      icon: "FaUniversity",
+      image: "/images/nyu.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -78,7 +79,7 @@ export default function ExperienceSection() {
       endDate: new Date("2021-05-31"),
       description:
         "Engaged in NGO work aimed to provide free education to underprivileged children.",
-      icon: "FaUser",
+      image: "/images/data-analyst.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -89,7 +90,7 @@ export default function ExperienceSection() {
       endDate: new Date("2020-12-31"),
       description:
         "Developed a product based on published research, gaining 15 active users in 3 months. Conducted market research, refined the MVP through user testing. Pitched to investors but pivoted after identifying product-market misalignment, establishing thought leadership with a research publication in IEEE Conference.",
-      icon: "FaLightbulb",
+      image: "/images/research-to-startup.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -99,8 +100,8 @@ export default function ExperienceSection() {
       startDate: new Date("2019-06-01"),
       endDate: new Date("2020-03-31"),
       description:
-        "Published a research paper and presented it at a conference. Published multiple other review papers in international Scopus indexed journals.",
-      icon: "FaBook",
+        "Published a research paper and presented it at 2020 IEEE Conference of Emerging Technologies. Published multiple other review papers in international Scopus indexed journals.",
+      image: "/images/research-work.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -110,7 +111,7 @@ export default function ExperienceSection() {
       startDate: new Date("2018-06-01"),
       endDate: new Date("2018-08-31"),
       description: "Developed a website for a client.",
-      icon: "FaGlobe",
+      image: "/images/web-developer.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -120,7 +121,7 @@ export default function ExperienceSection() {
       startDate: new Date("2016-06-01"),
       endDate: new Date("2016-08-31"),
       description: "Built a student community surrounding Clean India Drive.",
-      icon: "FaLeaf",
+      image: "/images/founder.png",
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -131,37 +132,39 @@ export default function ExperienceSection() {
     : experiences.slice(0, 5);
 
   return (
-    <section id="experience" className="py-16">
+    <section id="experience" className="py-16 bg-white text-black font-[Courier_New]">
       <div className="container mx-auto px-4">
-      <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden text-center">
-            <span className="relative z-10 glitch" data-text="Experience">
-              Experience
-            </span>
-          </h2>
-        <div className="space-y-8">
+        <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden text-center mb-8 break-reconstruct">
+          Experience
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visibleExperiences.map((exp, index) => (
-            <div key={index} className="border-l-4 border-purple-500 pl-4">
-              <div className="flex items-center">
-                {exp.icon && <div className="mr-2">{React.createElement(require("react-icons/fa")[exp.icon])}</div>}
-                <h3 className="text-xl font-semibold">{exp.title}</h3>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400">
-                {exp.company && `${exp.company} | `}
-                {exp.startDate.toLocaleString('default', { month: 'short', year: 'numeric' })} - {exp.endDate.toLocaleString('default', { month: 'short', year: 'numeric' })}
-              </p>
-              <p className="mt-2">{exp.description}</p>
-            </div>
+            <Card key={index} className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <CardHeader className="p-4 relative">
+                <CardTitle className="text-lg flex items-center">
+                  {exp.image && <img src={exp.image} alt={exp.title} className="mr-2 w-8 h-8" />}
+                  {exp.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  {exp.company && `${exp.company} | `}
+                  {exp.startDate.toLocaleString('default', { month: 'short', year: 'numeric' })} - {exp.endDate.toLocaleString('default', { month: 'short', year: 'numeric' })}
+                </p>
+                <p className="text-sm">{exp.description}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
         <div className="flex justify-center mt-8">
-          <button
+          <Button
             onClick={() => setShowAllExperiences(!showAllExperiences)}
             className="bg-purple-500 hover:bg-blue-600 text-white font-bold py-2 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none transition-all duration-150 ease-in-out"
           >
             <span className="text-xs pixelated">
-              {showAllExperiences ? "Show Less" : "Show All Experiences"}
+              {showAllExperiences ? "Show Less" : "CTRL + H"}
             </span>
-          </button>
+          </Button>
         </div>
       </div>
     </section>

@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       console.debug('Fetching projects from collection...');
       const projects = await collection.find({}).toArray();
-      console.debug('Fetched projects:', projects);
+      // console.debug('Fetched projects:', projects);
 
       // Send success response
       res.status(200).json(projects);

@@ -3,7 +3,7 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useControls } from "leva";
+import { useControls, Leva } from "leva";
 
 const vertexShader = `
   uniform sampler2D map;
@@ -61,7 +61,7 @@ const KinectPointCloud: React.FC = () => {
     farClipping: { value: 1800, min: 1, max: 10000 },
     pointSize: { value: 2.18, min: 1, max: 10 },
     zOffset: { value: 960, min: 0, max: 4000 },
-  });
+  }, { collapsed: true });
 
   const geometry = useMemo(() => {
     const width = 640,

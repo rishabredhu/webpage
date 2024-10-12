@@ -41,9 +41,18 @@ export async function connectToDatabase() {
   try {
     const connection = await clientPromise;
     console.debug('Successfully connected to database');
+    // Add a ping to verify the connection
+    await connection.db().command({ ping: 1 });
+    console.debug('Database ping successful');
     return connection;
   } catch (error) {
     console.error('Error connecting to database:', error);
+    // Log more details about the error
+    if (error instanceof Error) {
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
     throw error; // Ensure the error is properly propagated
   }
 }
@@ -57,6 +66,12 @@ export async function checkDatabaseConnection() {
     return true;
   } catch (error) {
     console.error('Database connection check failed:', error);
+    // Log more details about the error
+    if (error instanceof Error) {
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
     return false;
   }
 }

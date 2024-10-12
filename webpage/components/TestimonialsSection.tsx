@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Building2, GraduationCap, Briefcase } from "lucide-react";
-import { FiLinkedin } from 'react-icons/fi';  // Changed this line
+import { FiLinkedin } from 'react-icons/fi';
 
 interface Testimonial {
   name: string;
@@ -68,6 +68,7 @@ export default function RetroTestimonialsSection() {
   ];
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [displayedFeedback, setDisplayedFeedback] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,6 +77,11 @@ export default function RetroTestimonialsSection() {
 
     return () => clearInterval(interval);
   }, [testimonials.length]);
+
+  useEffect(() => {
+    const feedback = testimonials[currentTestimonialIndex].feedback;
+    setDisplayedFeedback(feedback);
+  }, [currentTestimonialIndex, testimonials]);
 
   const currentTestimonial = testimonials[currentTestimonialIndex];
 
@@ -127,17 +133,19 @@ export default function RetroTestimonialsSection() {
         <div className="flex justify-center">
           <Card className="retro-card rounded-none overflow-hidden w-full max-w-2xl">
             <CardContent className="p-8">
-              <FaQuoteLeft className="text-[#9370DB] text-4xl mb-6" />
-              <motion.p 
-                key={currentTestimonialIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-[#9370DB] mb-6 text-sm retro-text leading-relaxed"
-              >
-                {currentTestimonial.feedback}
-              </motion.p>
-              <div className="flex items-center mb-4">
+              <div className="bg-white p-2">
+                <FaQuoteLeft className="text-[#9370DB] text-4xl mb-6" />
+                <motion.p 
+                  key={currentTestimonialIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-[#9370DB] mb-6 text-sm retro-text leading-relaxed"
+                >
+                  {displayedFeedback}
+                </motion.p>
+              </div>
+              <div className="flex items-center mb-4 bg-white p-2">
                 <Avatar className="w-14 h-14 mr-4 rounded-none">
                   {currentTestimonial.photoUrl ? (
                     <AvatarImage

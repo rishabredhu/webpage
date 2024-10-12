@@ -123,40 +123,21 @@ export function ScrollableCategories({
             key={category.name}
             onClick={() => setCurrentIndex(index)}
             className={`
-              relative px-6 py-3 text-sm font-semibold rounded-lg overflow-hidden group 
-              focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75
-              transition-all duration-300 ease-in-out
-              ${
-                currentIndex === index
-                  ? "text-white bg-purple-600"
-                  : "text-purple-600 bg-transparent hover:text-white hover:bg-purple-600"
-              }
+              bg-purple-500 hover:bg-blue-600 text-white font-bold py-2 px-4 
+              border-2 border-black 
+              shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
+              hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] 
+              active:shadow-none 
+              transition-all duration-150 ease-in-out
+              ${currentIndex === index ? 'bg-blue-600' : ''}
             `}
           >
-            <span className="relative z-10">{category.name}</span>
-            <span className="absolute inset-0 border-2 border-dotted border-current rounded-lg"></span>
-            <span className="absolute inset-0 flex">
-              <span className="w-1/4 h-full bg-gradient-to-t from-transparent via-current to-transparent opacity-20 animate-revolve"></span>
-            </span>
+            {category.name}
           </button>
         ))}
       </div>
-      <style jsx>{`
-        @keyframes revolve {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-revolve {
-          animation: revolve 3s linear infinite;
-        }
-      `}</style>
     </div>
-  );
-}
+  );}
 
 // Main component to display the skills section
 export default function SkillsSection() {
@@ -164,26 +145,29 @@ export default function SkillsSection() {
   const [showAllSkills, setShowAllSkills] = useState(false); // New state for showing all skills
 
   // Array of skill categories
-  const categories: SkillCategory[] = [
+  const categories: SkillCategory[] =  [
     {
       title: "ENTREPRENEURIAL SKILLS",
       skills: [
         {
           name: "Startup Development",
-          description: "MVP development, user validation, iteration cycles",
+          description:
+            "Converted precision agriculture research into a startup by developing an MVP, conducting user validation, and iterating based on feedback.",
         },
         {
           name: "Fundraising & Pitching",
-          description: "Experience in pre-seed startups, pitching to investors",
+          description:
+            "Attempted to secure pre-seed funding by pitching precision agriculture solutions to investors, refining the business model and value proposition.",
         },
         {
           name: "Product Market Fit",
           description:
-            "Conducting feasibility studies, validating product with initial users",
+            "Conducted feasibility studies and validated product-market fit for precision agriculture tools through user testing and feedback loops.",
         },
         {
           name: "Project Management",
-          description: "Leading teams, roadmap planning, agile methodologies",
+          description:
+            "Led a team to develop and launch an MVP, planned roadmaps, and utilized agile methodologies to manage iterative development cycles.",
         },
       ],
     },
@@ -193,32 +177,32 @@ export default function SkillsSection() {
         {
           name: "Literature Review",
           description:
-            "Conducting comprehensive reviews of existing AI/ML and HCI research and literature.",
+            "Conducted comprehensive reviews of AI/ML research for precision agriculture and computer vision applications.",
         },
         {
           name: "Data Collection",
           description:
-            "Designing and implementing data collection methods for AI/ML models and HCI studies.",
+            "Designed and implemented data collection methods for urban data aggregation and precision agriculture IoT networks.",
         },
         {
           name: "Qualitative Analysis",
           description:
-            "Analyzing non-numerical data to identify patterns and insights in HCI research.",
+            "Analyzed qualitative data from user interactions in Guard Vision and AI Hawk projects to improve system features.",
         },
         {
           name: "Quantitative Analysis",
           description:
-            "Applying statistical methods to analyze numerical data for AI/ML models.",
+            "Applied statistical methods to analyze GPU performance logs and optimize data pipelines, achieving efficiency improvements.",
         },
         {
           name: "Model Development",
           description:
-            "Developing and training machine learning models for various applications.",
+            "Developed machine learning models for GPU performance optimization and precision agriculture predictive analytics.",
         },
         {
           name: "User-Centered Design",
           description:
-            "Applying HCI principles to design user-friendly AI/ML systems.",
+            "Applied HCI principles in developing user-friendly dashboards and interactive interfaces for real-time data visualization.",
         },
       ],
     },
@@ -228,20 +212,22 @@ export default function SkillsSection() {
         {
           name: "Feature Prioritization",
           description:
-            "Decision making based on user feedback, data-driven insights",
+            "Prioritized features for MVP development in HeadStarter AI based on user feedback and data-driven insights.",
         },
         {
           name: "Roadmap Development",
-          description: "Long-term planning, backlog grooming, sprint planning",
+          description:
+            "Planned long-term product roadmaps for AI projects, managing backlog grooming and sprint planning in agile teams.",
         },
         {
           name: "User Research",
           description:
-            "Understanding user needs, working with cross-functional teams",
+            "Conducted user research in Social Group Lab and HeadStarter AI to understand user needs and inform feature development.",
         },
         {
           name: "Metrics & KPIs",
-          description: "A/B testing, user engagement, conversion optimization",
+          description:
+            "Defined and tracked KPIs for AI systems, performed A/B testing to optimize user engagement and conversion rates.",
         },
       ],
     },
@@ -251,27 +237,27 @@ export default function SkillsSection() {
         {
           name: "Wireframing",
           description:
-            "Creating low-fidelity wireframes to outline the structure of web pages.",
+            "Created low-fidelity wireframes to outline the structure of interactive dashboards and user interfaces.",
         },
         {
           name: "Prototyping",
           description:
-            "Developing interactive prototypes to visualize user interactions.",
+            "Developed interactive prototypes using React to visualize user interactions and validate design concepts.",
         },
         {
           name: "User Testing",
           description:
-            "Conducting usability tests to gather feedback and improve designs.",
+            "Conducted usability tests on dashboards and AI features to gather feedback and iterate on designs.",
         },
         {
           name: "Visual Design",
           description:
-            "Designing visually appealing interfaces with a focus on user experience.",
+            "Designed visually appealing and intuitive interfaces for real-time data dashboards, enhancing user experience.",
         },
         {
           name: "Interaction Design",
           description:
-            "Designing interactive elements to enhance user engagement.",
+            "Designed interactive elements in dashboards and notification systems to improve user engagement and responsiveness.",
         },
         {
           name: "Information Architecture",
@@ -289,50 +275,57 @@ export default function SkillsSection() {
             {
               name: "Python",
               description:
-                "Primary language for backend development and data processing.",
+                "Developed backend systems and data processing pipelines for AI projects, utilizing Python’s extensive libraries for data manipulation and machine learning.",
             },
             {
               name: "C++",
-              description: "Used for performance-critical applications.",
+              description:
+                "Engineered performance-critical components for data processing pipelines, optimizing algorithms for efficiency in real-time ETL systems.",
             },
             {
               name: "Go",
               description:
-                "Used for building scalable and concurrent applications.",
+                "Built scalable and concurrent microservices for precision agriculture IoT networks, implementing fault-tolerant architectures with Go routines.",
             },
-            { name: "Flask", description: "Micro web framework for Python." },
+            {
+              name: "Flask",
+              description:
+                "Created backend APIs for real-time data streaming and dashboard integration using Flask micro web framework.",
+            },
             {
               name: "REST APIs",
               description:
-                "Designed and implemented RESTful APIs for various projects.",
+                "Designed and implemented RESTful APIs for seamless communication between frontend interfaces and backend services.",
             },
             {
               name: "Docker",
               description:
-                "Containerized applications for consistent development and deployment.",
+                "Containerized applications to ensure consistent development and deployment environments, facilitating scalable microservices architectures.",
             },
             {
               name: "CI/CD",
               description:
-                "Implemented continuous integration and deployment pipelines.",
+                "Implemented continuous integration and deployment pipelines using tools like GitHub Actions and Docker to automate testing and deployment.",
             },
             {
               name: "Git",
               description:
-                "Version control system for collaborative development.",
+                "Managed version control for collaborative projects, ensuring code integrity and facilitating seamless integration of contributions from team members.",
             },
             {
               name: "PostgreSQL",
-              description: "Relational database for storing and managing data.",
+              description:
+                "Designed and managed PostgreSQL databases for storing and managing large datasets, optimizing queries for performance.",
             },
             {
               name: "MySQL",
-              description: "Relational database for storing and managing data.",
+              description:
+                "Utilized MySQL for relational data storage in various projects, ensuring efficient data retrieval and management.",
             },
             {
               name: "NoSQL",
               description:
-                "Non-relational database for handling large amounts of unstructured data.",
+                "Implemented NoSQL databases like MongoDB for handling large amounts of unstructured data in AI and data engineering projects.",
             },
           ],
         },
@@ -341,39 +334,43 @@ export default function SkillsSection() {
           skills: [
             {
               name: "React.js",
-              description: "Library for building user interfaces.",
+              description:
+                "Built interactive and responsive user interfaces for dashboards and AI applications using React.js, enhancing user experience and data visualization.",
             },
             {
               name: "TypeScript",
               description:
-                "Typed superset of JavaScript for large-scale applications.",
+                "Developed type-safe frontend applications with TypeScript, improving code reliability and maintainability in large-scale React projects.",
             },
             {
               name: "JavaScript",
-              description: "Primary language for frontend development.",
+              description:
+                "Used JavaScript for frontend development, creating dynamic and interactive web features in projects like Guard Vision and AI Hawk.",
             },
             {
               name: "Node.js",
               description:
-                "Runtime environment for executing JavaScript on the server.",
+                "Developed server-side functionalities and APIs with Node.js, enabling efficient data processing and real-time interactions in AI applications.",
             },
             {
               name: "HTML5",
-              description: "Markup language for structuring web content.",
+              description:
+                "Structured web content using HTML5 to ensure semantic and accessible web interfaces in various projects.",
             },
             {
               name: "CSS3",
-              description: "Stylesheet language for designing web pages.",
+              description:
+                "Styled web applications with CSS3, creating visually appealing and responsive designs for user interfaces.",
             },
             {
               name: "Next.js",
               description:
-                "React framework for building server-rendered applications.",
+                "Built server-rendered React applications with Next.js, improving performance and SEO for web-based AI tools.",
             },
             {
               name: "Vercel",
               description:
-                "Cloud platform for deploying and hosting web applications.",
+                "Deployed and hosted web applications on Vercel, ensuring optimized performance and scalability for frontend projects.",
             },
           ],
         },
@@ -382,35 +379,38 @@ export default function SkillsSection() {
           skills: [
             {
               name: "AWS (S3, Lambda, Kinesis, Redshift)",
-              description: "Cloud services for data processing and storage.",
+              description:
+                "Utilized AWS services like S3 for data storage, Lambda for serverless computing, Kinesis for real-time data streaming, and Redshift for data warehousing in data engineering projects.",
             },
             {
               name: "Apache Kafka",
-              description: "Distributed event streaming platform.",
+              description:
+                "Implemented Apache Kafka for distributed event streaming and real-time data pipeline processing, handling thousands of records per second.",
             },
             {
               name: "Apache Spark",
               description:
-                "Utilized for large-scale data processing and analytics.",
+                "Used Apache Spark for large-scale data processing and analytics, enabling efficient handling of big data in projects like Precision Agriculture.",
             },
             {
               name: "ETL",
               description:
-                "Designed and maintained ETL processes for data warehousing.",
+                "Designed and maintained ETL processes using tools like Apache Airflow and PySpark, ensuring efficient data transformation and loading in data warehouses.",
             },
             {
               name: "Data Warehousing",
               description:
-                "Built and optimized data warehouses for efficient querying.",
+                "Built and optimized data warehouses using AWS Redshift and Amazon S3, aggregating large datasets for analysis and research.",
             },
             {
               name: "Airflow",
-              description: "Managed complex workflows and data pipelines.",
+              description:
+                "Managed complex workflows and data pipelines with Apache Airflow, automating ETL processes and ensuring reliable data processing.",
             },
             {
               name: "Docker",
               description:
-                "Containerized applications for consistent development and deployment.",
+                "Utilized Docker for containerizing data engineering applications, facilitating consistent environments and scalable deployments.",
             },
           ],
         },
@@ -420,27 +420,32 @@ export default function SkillsSection() {
             {
               name: "PySpark",
               description:
-                "Used for distributed data processing and machine learning.",
+                "Used PySpark for distributed data processing and machine learning tasks in large-scale data engineering projects.",
             },
             {
               name: "Pandas",
-              description: "Performed data manipulation and analysis.",
+              description:
+                "Performed data manipulation and analysis with Pandas, handling large datasets for data engineering and machine learning projects.",
             },
             {
               name: "R",
-              description: "Conducted statistical analysis and visualization.",
+              description:
+                "Conducted statistical analysis and developed predictive models in R for precision agriculture, optimizing resource allocation and yield.",
             },
             {
               name: "Statistical Analysis",
-              description: "Applied statistical methods to interpret data.",
+              description:
+                "Applied statistical methods to interpret data from GPU performance logs and precision agriculture studies, driving data-driven optimizations.",
             },
             {
               name: "Predictive Modeling",
-              description: "Developed models to predict future outcomes.",
+              description:
+                "Developed predictive models for GPU performance optimization and precision agriculture, utilizing machine learning algorithms to forecast outcomes.",
             },
             {
               name: "Data Visualization (Tableau, Matplotlib)",
-              description: "Created visual representations of data insights.",
+              description:
+                "Created data visualizations and dashboards using Tableau and Matplotlib to present key insights and analytical results.",
             },
           ],
         },
@@ -450,30 +455,32 @@ export default function SkillsSection() {
             {
               name: "PyTorch",
               description:
-                "Implemented deep learning models for image recognition.",
+                "Implemented deep learning models for image recognition and anomaly detection using PyTorch, enhancing the Guard Vision security system.",
             },
             {
               name: "OpenCV",
               description:
-                "Performed real-time image processing and computer vision tasks.",
+                "Performed real-time image processing and computer vision tasks with OpenCV, improving the accuracy of face detection models.",
             },
             {
               name: "Milvus",
               description:
-                "Used for similarity search in large-scale image datasets.",
+                "Used Milvus for similarity search in large-scale image datasets, enabling efficient image retrieval in Guard Vision.",
             },
             {
               name: "Similarity Search",
-              description: "Developed systems to find similar images.",
+              description:
+                "Developed systems to find similar images using Milvus and other similarity search technologies, enhancing image-based security features.",
             },
             {
               name: "Transfer Learning",
-              description: "Applied pre-trained models to new tasks.",
+              description:
+                "Applied transfer learning techniques with pre-trained models to new computer vision tasks, improving model performance with limited data.",
             },
             {
               name: "Real-Time Image Processing",
               description:
-                "Processed images in real-time for various applications.",
+                "Processed images in real-time for security applications, enabling prompt anomaly detection and response in Guard Vision.",
             },
           ],
         },
@@ -482,33 +489,40 @@ export default function SkillsSection() {
           skills: [
             {
               name: "LangChain",
-              description: "Built language models for various NLP tasks.",
+              description:
+                "Built language models and intelligent notification systems using LangChain, enabling context-aware messaging and personalized content generation.",
             },
             {
               name: "NLP Libraries (spaCy, NLTK)",
-              description: "Used for text processing and analysis.",
+              description:
+                "Used spaCy and NLTK for text processing and analysis in projects like AI Hawk, enhancing resume tailoring and automation.",
             },
             {
               name: "Sentiment Analysis",
-              description: "Analyzed text to determine sentiment.",
+              description:
+                "Analyzed user feedback and engagement metrics using sentiment analysis techniques to improve AI-driven features.",
             },
             {
               name: "Topic Modeling",
-              description: "Identified topics in large text corpora.",
+              description:
+                "Identified topics in large text datasets to inform feature development and user experience improvements.",
             },
             {
               name: "Text Preprocessing",
-              description: "Cleaned and prepared text data for analysis.",
+              description:
+                "Cleaned and prepared text data for analysis and model training, ensuring high-quality inputs for NLP tasks.",
             },
             {
               name: "FAISS",
-              description: "Implemented fast similarity search for text data.",
+              description:
+                "Implemented FAISS for fast similarity search in text data, enhancing the performance of NLP-driven applications.",
             },
           ],
         },
       ],
     },
   ];
+  
 
   return (
     <section className="py-16 bg-white text-black font-['Courier_New']">

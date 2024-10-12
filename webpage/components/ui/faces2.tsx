@@ -12,7 +12,7 @@ const Faces2: React.FC = () => {
   const { scene, camera, gl } = useThree();
 
   useEffect(() => {
-    const API = { thickness: 10 };
+    const API = { thickness: 100 };
 
     new THREE.BufferGeometryLoader().load(
       "json/WaltHeadLo_buffergeometry.json",
@@ -24,7 +24,7 @@ const Faces2: React.FC = () => {
 
         // Create materials
         const material1 = new THREE.MeshBasicMaterial({
-          color: 0x000000, // Set color to black
+          color: 0xff0000, // Set color to red for better visibility
           wireframe: true,
         });
 
@@ -68,7 +68,7 @@ const Faces2: React.FC = () => {
       <OrbitControls
         args={[camera, gl.domElement]}
         enablePan={false}
-        enableZoom={false}
+        enableZoom={true} // Enable zoom for better visibility
       />
       <mesh ref={meshRef} />
     </>
@@ -112,7 +112,7 @@ const fragmentShaderSource = `
     vec3 afwidth = fwidth(vCenter.xyz);
     vec3 edge3 = smoothstep((thickness - 1.0) * afwidth, thickness * afwidth, vCenter.xyz);
     float edge = 1.0 - min(min(edge3.x, edge3.y), edge3.z);
-    gl_FragColor.rgb = gl_FrontFacing ? vec3(0.0, 0.0, 0.0) : vec3(0.0, 0.0, 0.0); // Set color to black
+    gl_FragColor.rgb = gl_FrontFacing ? vec3(1.0, 0.0, 0.0) : vec3(1.0, 0.0, 0.0); // Set color to red for better visibility
     gl_FragColor.a = edge;
   }
 `;

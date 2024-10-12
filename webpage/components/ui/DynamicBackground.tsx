@@ -15,7 +15,7 @@ const DynamicBackground: React.FC = () => {
 
     function init() {
       camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 20000);
-      camera.position.y = 200;
+      camera.position.y =10;
 
       clock = new THREE.Clock();
 
@@ -32,7 +32,7 @@ const DynamicBackground: React.FC = () => {
       }
 
       for (let i = 0; i < position.count; i++) {
-        const y = 35 * Math.sin(i / 2); // Reduced amplitude for smoother waves
+        const y = 25 * Math.sin(i / 2); // Reduced amplitude for smoother waves
         position.setY(i, y);
       }
 
@@ -41,7 +41,19 @@ const DynamicBackground: React.FC = () => {
       texture.repeat.set(5, 5); // Increased texture repeat for finer details
       texture.colorSpace = THREE.SRGBColorSpace;
 
-      material = new THREE.MeshBasicMaterial({ color: 0x80deea, map: texture }); // Lighter material color
+      const gradientTexture = new THREE.CanvasTexture(document.createElement('canvas'));
+      const canvas = gradientTexture.image;
+      canvas.width = 256;
+      canvas.height = 256;
+      const context = canvas.getContext('2d');
+      const gradient = context.createLinearGradient(0, 0, 256, 256);
+      gradient.addColorStop(0, '#800080'); // Purple
+      gradient.addColorStop(1, '#80deea'); // Blueish green
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, 256, 256);
+      gradientTexture.needsUpdate = true;
+
+      material = new THREE.MeshBasicMaterial({ map: gradientTexture });
 
       mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
@@ -53,7 +65,7 @@ const DynamicBackground: React.FC = () => {
 
       controls = new FirstPersonControls(camera, renderer.domElement);
       controls.movementSpeed = 500; // Reduced movement speed for smoother control
-      controls.lookSpeed = 0.1; // Reduced look speed for smoother control
+      controls.lookSpeed = 0.01; // Reduced look speed for smoother control
 
       window.addEventListener('resize', onWindowResize);
     }
@@ -77,7 +89,7 @@ const DynamicBackground: React.FC = () => {
       const position = geometry.attributes.position;
 
       for (let i = 0; i < position.count; i++) {
-        const y = 35 * Math.sin(i / 5 + (time + i) / 7); // Reduced amplitude for smoother waves
+        const y = 25 * Math.sin(i / 5 + (time + i) / 7); // Reduced amplitude for smoother waves
         position.setY(i, y);
       }
 
@@ -96,7 +108,7 @@ const DynamicBackground: React.FC = () => {
     };
   }, []);
 
-  return <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} />;
+  return <div ref={containerRef} style={{ position: 'fixed', bottom: '0', left: '50%', transform: 'translateX(-50%)', width: '100%', height: '20%', zIndex: -1 }} />;
 };
 
 export default DynamicBackground;
