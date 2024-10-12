@@ -53,8 +53,8 @@ export default function HomePage() {
     <>
       {/* <DynamicBackground /> */}
       
-      <Faces2 />
-      
+      {/* <Faces2 />
+       */}
       <section className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row mb-16 space-y-8 md:space-y-0 md:space-x-8">
           <div className="md:w-1/2 hidden md:block">
@@ -62,7 +62,7 @@ export default function HomePage() {
               <Canvas style={{ width: "100%", height: "600px" }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1} />
-                {/* <KinectPointCloud /> */}
+                <KinectPointCloud />
 
               </Canvas>
             </div>
