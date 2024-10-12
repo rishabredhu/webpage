@@ -11,9 +11,12 @@ import { Canvas } from "@react-three/fiber";
 import KinectPointCloud from "@/components/ui/KineticPointCloud";
 import InstancedTriangles from "@/components/ui/InstancedTriangles";
 import LiquidBorder from "@/components/ui/LiquidBorder";
+const DynamicBackground = dynamic(() => import("@/components/ui/DynamicBackground"), { ssr: false });
 export default function HomePage() {
   return (
     <>
+      
+
       <section className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row mb-16 space-y-8 md:space-y-0 md:space-x-8">
           <div className="md:w-1/2 hidden md:block">

@@ -27,7 +27,7 @@ const links: NavLink[] = [
   { name: "email", url: "mailto:rishabredhu@gmail.com", icon: FaEnvelope },
   {
     name: "resume",
-    url: "https://www.dropbox.com/scl/fi/8788fi9wqen0i819xvgcl/resume_RishabNG.pdf?rlkey=21yrb3ilpqrv105tm2ycljuxy&st=nyz59zg2&dl=0",
+    url: "https://www.dropbox.com/scl/fi/h9ouwbbyk5thax8n019hp/Rishab_Singh_FT_resume.pdf?rlkey=vi7k4jugptph2eckbasltwyj5&st=pji82opg&dl=0",
     icon: FaFileAlt,
   },
 ];

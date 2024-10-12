@@ -1,44 +1,64 @@
-import { MongoClient } from "mongodb";
+import { MongoClient } from 'mongodb';
 
-const db_password = process.env.DB_PASSWORD;
-const uri = `mongodb+srv://user:${db_password}@web-portfolio.c6qd2.mongodb.net/?retryWrites=true&w=majority&appName=web-portfolio`;
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please add your MongoDB URI to .env.local');
+}
+
+const uri = process.env.MONGODB_URI;
+const options = {};
+
+// Declare a global variable to hold the MongoDB connection promise for development
+declare global {
+  // This is necessary because TypeScript does not know about global properties like _mongoClientPromise
+  var _mongoClientPromise: Promise<MongoClient>;
+}
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-if (!process.env.DB_PASSWORD) {
-  throw new Error('Please add your MongoDB password to .env.local')
-}
+console.debug('MongoDB URI:', uri);
+console.debug('MongoDB Options:', options);
 
+// Only create a new client if it doesn't already exist
 if (process.env.NODE_ENV === 'development') {
-  // In development mode, use a global variable so that the value
-  // is preserved across module reloads caused by HMR (Hot Module Replacement).
-  if (!(global as any)._mongoClientPromise) {
-    console.log("Creating new MongoClient instance for development");
-    client = new MongoClient(uri);
-    (global as any)._mongoClientPromise = client.connect();
+  console.debug('Environment: Development');
+  if (!global._mongoClientPromise) {
+    console.debug('Creating new MongoClient instance for development');
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
   } else {
-    console.log("Reusing existing MongoClient instance for development");
+    console.debug('Reusing existing MongoClient instance for development');
   }
-  clientPromise = (global as any)._mongoClientPromise;
+  clientPromise = global._mongoClientPromise;
 } else {
-  // In production mode, it's best to not use a global variable.
-  console.log("Creating new MongoClient instance for production");
-  client = new MongoClient(uri);
+  console.debug('Environment: Production');
+  client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }
 
 export async function connectToDatabase() {
+  console.debug('Connecting to database...');
   try {
-    const client = await clientPromise;
-    console.log("Connected to MongoDB!");
-    return client;
+    const connection = await clientPromise;
+    console.debug('Successfully connected to database');
+    return connection;
   } catch (error) {
-    console.error("Failed to connect to MongoDB", error);
-    throw error;
+    console.error('Error connecting to database:', error);
+    throw error; // Ensure the error is properly propagated
   }
 }
 
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client can be shared across functions.
+export async function checkDatabaseConnection() {
+  console.debug('Checking database connection...');
+  try {
+    const client = await clientPromise;
+    await client.db().command({ ping: 1 });
+    console.debug('Database connection successful');
+    return true;
+  } catch (error) {
+    console.error('Database connection check failed:', error);
+    return false;
+  }
+}
+
 export default clientPromise;

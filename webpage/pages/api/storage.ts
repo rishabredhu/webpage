@@ -1,69 +1,40 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "@/lib/mongodbClient";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { connectToDatabase } from '@/lib/mongodbClient';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  if (req.method === "POST") {
-    const {
-      title,
-      description,
-      year,
-      highlight,
-      github_url,
-      research_url,
-      technologies,
-      team_size,
-    } = req.body;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.debug('Request method:', req.method);
 
-    console.log("Received POST request with body:", req.body);
-
+  if (req.method === 'GET') {
     try {
+      console.debug('Connecting to database...');
       const client = await connectToDatabase();
-      console.log("Connected to database");
+      console.debug('Connected to database');
 
-      const database = client.db("web-portfolio");
-      const collection = database.collection("project");
+      const db = client.db('web-portfolio');
+      console.debug('Selected database:', db.databaseName);
 
-      const result = await collection.insertOne({
-        title,
-        description,
-        year,
-        highlight,
-        github_url,
-        research_url,
-        technologies,
-        team_size,
-      });
+      const collection = db.collection('project');
+      console.debug('Selected collection:', collection.collectionName);
 
-      console.log("Inserted project details with result:", result);
-
-      res.status(200).json({ id: result.insertedId, ...req.body });
-    } catch (error) {
-      console.error("Error inserting project details:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  } else if (req.method === "GET") {
-    try {
-      const client = await connectToDatabase();
-      console.log("Connected to database");
-
-      const database = client.db("web-portfolio");
-      const collection = database.collection("project");
-
+      console.debug('Fetching projects from collection...');
       const projects = await collection.find({}).toArray();
+      console.debug('Fetched projects:', projects);
 
-      console.log("Fetched project details:", projects);
-
+      // Send success response
       res.status(200).json(projects);
     } catch (error) {
-      console.error("Error fetching project details:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+      // Check if it's a connection error
+      if (error instanceof Error && error.name === 'MongoNetworkError') {
+        console.error('Database connection error:', error);
+        res.status(503).json({ error: 'Service Unavailable' });
+      } else {
+        console.error('Error fetching project details:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
     }
   } else {
-    console.warn(`Method ${req.method} Not Allowed`);
-    res.setHeader("Allow", ["POST", "GET"]);
+    console.debug('Invalid request method:', req.method);
+    res.setHeader('Allow', ['GET']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

@@ -520,7 +520,7 @@ export default function SkillsSection() {
         
         <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
             <span className="relative z-10 glitch block text-center" data-text="My Projects">
-             //// Runtime Capabilities //// [ Skills Section ] 
+              Runtime Capabilities 
             </span>
           </h2>
         

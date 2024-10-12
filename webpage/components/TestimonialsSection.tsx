@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Building2, GraduationCap, Briefcase } from "lucide-react";
+import { FiLinkedin } from 'react-icons/fi';  // Changed this line
 
 interface Testimonial {
   name: string;
@@ -171,6 +172,14 @@ export default function RetroTestimonialsSection() {
                   <div className="flex items-center">
                     <GraduationCap className="w-4 h-4 mr-2 text-[#9370DB]" />
                     <span>{currentTestimonial.school}</span>
+                  </div>
+                )}
+                {currentTestimonial.linkedinUrl && (
+                  <div className="flex items-center">
+                    <FiLinkedin className="w-4 h-4 mr-2 text-[#9370DB]" />
+                    <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                      LinkedIn Profile
+                    </a>
                   </div>
                 )}
               </div>

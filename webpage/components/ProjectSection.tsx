@@ -1,17 +1,18 @@
+// components/ProjectsSection.tsx
+
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { Github, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from 'react';
+import { Github, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { connectToDatabase } from "@/lib/mongodbClient";
+} from '@/components/ui/card';
+import { connectToDatabase } from '@/lib/mongodbClient';
+import { ErrorBoundary } from 'react-error-boundary';
 
 interface ProjectProps {
   id: string;
@@ -99,8 +100,16 @@ const ProjectCard: React.FC<ProjectProps> = ({
   );
 };
 
+const ErrorFallback = ({ error }: { error: Error }) => (
+  <div className="bg-red-200 border-4 border-red-500 text-red-700 px-4 py-3 mb-6" role="alert">
+    <strong className="font-bold">Error: </strong>
+    <span className="block sm:inline">{error.message}</span>
+  </div>
+);
+
 const ProjectsSection: React.FC = () => {
   const [projects, setProjects] = useState<ProjectProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -116,37 +125,43 @@ const ProjectsSection: React.FC = () => {
       const data = await response.json();
       setProjects(data);
     } catch (error) {
+      console.error('Error fetching projects:', error);
       setError((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="bg-white-200 py-20">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
-          <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
-            <span className="relative z-10 glitch" data-text="My Projects">
-              PROJECT DASHBOARD
-            </span>
-          </h2>
-        </div>
-        {error && (
-          <div
-            className="bg-red-200 border-4 border-red-500 text-red-700 px-4 py-3 mb-6"
-            role="alert"
-          >
-            <strong className="font-bold">Error: </strong>
-            <span className="block sm:inline">{error}</span>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <section className="bg-white-200 py-20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
+            <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
+              <span className="relative z-10 glitch" data-text="My Projects">
+                PROJECT DASHBOARD
+              </span>
+            </h2>
           </div>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} {...project} />
-          ))}
+          {loading && <p>Loading...</p>}
+          {error && (
+            <div className="bg-red-200 border-4 border-red-500 text-red-700 px-4 py-3 mb-6" role="alert">
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
+          {!loading && !error && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <ErrorBoundary key={project.id} FallbackComponent={ErrorFallback}>
+                  <ProjectCard {...project} />
+                </ErrorBoundary>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+    </ErrorBoundary>
   );
 };
 

@@ -82,8 +82,8 @@ const Chatbot: React.FC = () => {
             <div className="p-4 bg-blue-500 text-white flex justify-between items-center">
               <h3 className="font-bold">Chat with Me</h3>
               <Button
-                variant="ghost"
-                size="icon"
+                variant="outline"
+                size="md"
                 onClick={() => setIsOpen(false)}
               >
                 <X className="h-4 w-4" />
@@ -128,7 +128,7 @@ const Chatbot: React.FC = () => {
       </AnimatePresence>
       <Button
         className="fixed bottom-5 right-5 rounded-full"
-        size="icon"
+        size="md"
         onClick={() => setIsOpen(true)}
       >
         <MessageSquare className="h-6 w-6" />

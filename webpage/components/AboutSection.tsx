@@ -8,6 +8,9 @@ import { Canvas } from "@react-three/fiber";
 import ErrorBoundary from "./ErrorBoundary"; // You'll need to create this component
 import Faces2 from "./ui/faces2";
 import Chatbot from "./ui/retro-chatbot";
+import { RecentActivity } from "./RecentActivity";
+
+
 const AboutSection: React.FC = () => {
   return (
     <section className="bg-white-200 py-20">
@@ -31,7 +34,9 @@ const AboutSection: React.FC = () => {
         </p>
       </div>
 
-
+      <div className="mt-6">
+        <RecentActivity />
+      </div>
     </section>
     
   );
