@@ -137,11 +137,6 @@ export default function RetroTestimonialsSection() {
         <div className="flex justify-center items-start space-x-8">
         
 
-          <div className="retro-card rounded-none overflow-hidden w-full max-w-2xl p-8 bg-white" style={{ height: '500px' }}>
-            <Canvas>
-              <KinectPointCloud />
-            </Canvas>
-          </div>
           <Card className="retro-card rounded-none overflow-hidden w-full max-w-2xl">
             <CardContent className="p-8">
               <div className="bg-black p-2">
@@ -224,6 +219,7 @@ export default function RetroTestimonialsSection() {
           </Card>
         </div>
       </div>
+      
       
     </section>
   );

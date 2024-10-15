@@ -61,7 +61,7 @@ const KinectPointCloud: React.FC = () => {
     farClipping: { value: 1800, min: 1, max: 10000 },
     pointSize: { value: 2.18, min: 1, max: 10 },
     zOffset: { value: 960, min: 0, max: 4000 },
-  }, { collapsed: true });
+  }, { collapsed: true, position: { x: 0, y: window.innerHeight - 300 } });
 
   const geometry = useMemo(() => {
     const width = 640,

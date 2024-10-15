@@ -12,6 +12,8 @@ import Chatbot from "../components/ui/retro-chatbot";
 
 import LiquidBorder from "@/components/ui/LiquidBorder";
 import Scene from "@/components/ui/3dHome"
+import { Canvas } from '@react-three/fiber';
+import KinectPointCloud from "@/components/ui/KineticPointCloud";
 
 const DynamicBackground = dynamic(() => import("@/components/ui/DynamicBackground"), { ssr: false });
 
@@ -93,6 +95,12 @@ export default function HomePage() {
       <div ref={(el) => { sectionRefs.current[4] = el; }}>
         <TestimonialsSection />
       </div>
+
+      <div className="retro-card rounded-none overflow-hidden w-full p-8 bg-white mb-8" style={{ height: '500px' }}>
+            <Canvas>
+              <KinectPointCloud />
+            </Canvas>
+          </div>
     </>
   );
 }

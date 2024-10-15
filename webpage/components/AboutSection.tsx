@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Ensure lucide-react is installed
 import Link from "next/link"; // For better client-side routing
+import ReactTypingEffect from 'react-typing-effect'; // Ensure you have this import
 
 
 
@@ -28,6 +29,13 @@ const AboutSection: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [activities.length]);
+
+  const interestsText = [
+    "I am passionate about — development, design, and sports.",
+    "Early on, I realized I'm a visual thinker, which naturally led me to CS as a means to bring ideas to life.",
+    "I'm particularly strong in spatial reasoning, allowing me to see how different pieces fit together.",
+    "This helps me simplify complex problems—whether I'm coding algorithms, working with neural networks, or designing systems."
+  ];
 
   return (
     <section
@@ -182,12 +190,35 @@ const AboutSection: React.FC = () => {
 
           
             {/* Personal Interests Block */}
-            <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+            {/* <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
               <p className="text-sm leading-relaxed font-['Press_Start_2P']">
-                I've got a real mix of passions — <strong><span className="text-red-500">programming</span></strong>, <strong><span className="text-red-500">design</span></strong>, and <strong><span className="text-red-500">sports</span></strong> being just a few. Early on, I realized I'm a visual thinker, which naturally led me to CS where I can bring ideas to life. I'm particularly strong in spatial reasoning, allowing me to see how different pieces fit together. This helps me simplify complex problems—whether I'm coding algorithms, working with neural networks, or designing systems.
+                I am passionate about — <strong><span className="text-red-500">development</span></strong>, <strong><span className="text-red-500">design</span></strong>, and <strong><span className="text-red-500">sports</span></strong>. Early on, I realized I'm a visual thinker, which naturally led me to CS as a means to  bring ideas to life. I'm particularly strong in spatial reasoning, allowing me to see how different pieces fit together. This helps me simplify complex problems—whether I'm coding algorithms, working with neural networks, or designing systems.
               </p>
-            </div>
-           {/* Ensure this closing tag is present */}
+            </div> */}
+             <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+      <ReactTypingEffect
+        text={interestsText}
+        speed={50}
+        eraseSpeed={1}
+        eraseDelay={10}
+        typingDelay={1}
+        className="text-sm leading-relaxed font-['Press_Start_2P']"
+        cursorRenderer={cursor => <span className="text-red-500">{cursor}</span>}
+        displayTextRenderer={(text, i) => {
+          return (
+            <p>
+              {text.split('').map((char, i) => {
+                const key = `${i}`;
+                if (char === 'development' || char === 'design' || char === 'sports') {
+                  return <strong key={key} className="text-red-500">{char}</strong>;
+                }
+                return <span key={key}>{char}</span>;
+              })}
+            </p>
+          );
+        }}
+      />
+    </div>
           
 
           
@@ -226,7 +257,7 @@ const AboutSection: React.FC = () => {
             <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
               <h3 className="text-2xl font-['Press_Start_2P'] mb-4">Recent Activity</h3>
                 <div className="relative h-auto overflow-hidden mb-4">
-                <div className="relative w-full transition-opacity duration-500 font-['Press_Start_2P'] text-center">
+                <div className="relative w-full transition-opacity duration-500 font-['Press_Start_2P'] text-center bg-purple-200 p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
                   {activities[currentActivity]}
                 </div>
                 </div>

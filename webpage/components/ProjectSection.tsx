@@ -69,32 +69,32 @@ const ProjectCard: React.FC<ProjectProps> = ({
         <p className="font-['Courier_New'] text-sm mb-4">
           Team Size: {team_size}
         </p>
-        <div className="flex justify-between w-full mt-auto">
-          <Button
-            variant="outline"
-            size="md"
-            className="text-xs border-2 border-black hover:bg-black hover:text-white transition-colors"
-            asChild
-          >
-            <a href={github_url ?? '#'} target="_blank" rel="noopener noreferrer">
-              <Github className="mr-2 h-4 w-4" />
-              Github
-            </a>
-          </Button>
-          {research_url && (
-            <Button
-              variant="outline"
-              size="md"
-              className="text-xs border-2 border-black hover:bg-black hover:text-white transition-colors"
-              asChild
-            >
-              <a href={research_url ?? '#'} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Research
-              </a>
-            </Button>
-          )}
-        </div>
+        <div className="flex flex-col sm:flex-row justify-between w-full mt-8 gap-4">
+      <Button
+        variant="outline"
+        size="lg"
+        className="w-full sm:w-auto text-sm border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
+        asChild
+      >
+        <a href={github_url ?? '#'} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+          <Github className="mr-2 h-5 w-5" />
+          <span>Github</span>
+        </a>
+      </Button>
+      {research_url && (
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full sm:w-auto text-sm border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
+          asChild
+        >
+          <a href={research_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+            <ExternalLink className="mr-2 h-5 w-5" />
+            <span>Research</span>
+          </a>
+        </Button>
+      )}
+    </div>
       </CardContent>
     </Card>
   );
@@ -329,24 +329,8 @@ const ProjectsSection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProjects();
+    setProjects(FallbackProjects);
   }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const response = await fetch('/api/storage');
-      if (!response.ok) {
-        throw new Error('Failed to fetch projects from Storage');
-      }
-      const data = await response.json();
-      setProjects(data);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      setError((error as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -359,22 +343,11 @@ const ProjectsSection: React.FC = () => {
               </span>
             </h2>
           </div>
-          {loading && <p>Loading...</p>}
-          {error && (
-            <div className="bg-red-200 border-4 border-red-500 text-red-700 px-4 py-3 mb-6" role="alert">
-              <strong className="font-bold">Error: </strong>
-              <span className="block sm:inline">{error}</span>
-            </div>
-          )}
-          {!loading && !error && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                
-                  <ProjectCard {...project} />
-              
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {FallbackProjects.map((project) => (
+              <ProjectCard key={project.id} {...project} />
+            ))}
+          </div>
         </div>
       </section>
     </ErrorBoundary>
