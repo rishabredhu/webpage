@@ -7,6 +7,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Building2, GraduationCap, Briefcase } from "lucide-react";
 import { FiLinkedin } from 'react-icons/fi';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
+import FloatingGLB from "@/components/ui/3dHome";
+import KinectPointCloud from "@/components/ui/KineticPointCloud"; // Add this import statement
 
 interface Testimonial {
   name: string;
@@ -39,7 +43,7 @@ export default function RetroTestimonialsSection() {
       position: "Data Scientist",
       company: "Nucleix",
       school: "NorthEastern University",
-      photoUrl: "/images/yash.jpg",
+      photoUrl: "/images/yash.jpeg",
       linkedinUrl: "https://www.linkedin.com/in/yashbhojwani/",
       country: "United States",
     },
@@ -86,7 +90,7 @@ export default function RetroTestimonialsSection() {
   const currentTestimonial = testimonials[currentTestimonialIndex];
 
   return (
-    <section className="py-20 bg-[#e6e6fa] text-[#9370DB] font-mono">
+    <section className="py-20 bg-white text-[#9370DB] font-mono">
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         
@@ -95,7 +99,7 @@ export default function RetroTestimonialsSection() {
         }
         
         .retro-button {
-          background: #9370DB;
+          background: white;
           color: #000;
           border: none;
           padding: 10px 20px;
@@ -117,8 +121,8 @@ export default function RetroTestimonialsSection() {
         }
 
         .retro-card {
-          background: #D8BFD8;
-          box-shadow: 8px 8px 0px #000000;
+          background: #000000;
+          box-shadow: 8px 8px 0px #7DF9FF;
         }
       `}</style>
       <div className="container mx-auto px-4">
@@ -130,66 +134,77 @@ export default function RetroTestimonialsSection() {
         >
           &lt;What Others Say&gt;
         </motion.h2>
-        <div className="flex justify-center">
+        <div className="flex justify-center items-start space-x-8">
+        
+
+          <div className="retro-card rounded-none overflow-hidden w-full max-w-2xl p-8 bg-white" style={{ height: '500px' }}>
+            <Canvas>
+              <KinectPointCloud />
+            </Canvas>
+          </div>
           <Card className="retro-card rounded-none overflow-hidden w-full max-w-2xl">
             <CardContent className="p-8">
-              <div className="bg-white p-2">
-                <FaQuoteLeft className="text-[#9370DB] text-4xl mb-6" />
+              <div className="bg-black p-2">
+                <FaQuoteLeft className="text-white text-4xl mb-6" />
                 <motion.p 
                   key={currentTestimonialIndex}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="text-[#9370DB] mb-6 text-sm retro-text leading-relaxed"
+                  className="text-white-500 mb-6 text-sm retro-text leading-relaxed"
                 >
                   {displayedFeedback}
                 </motion.p>
               </div>
-              <div className="flex items-center mb-4 bg-white p-2">
-                <Avatar className="w-14 h-14 mr-4 rounded-none">
+              <div className="flex items-center mb-4 bg-black p-2">
+              
+              <Avatar className="w-14 h-14 mr-4 rounded-none">
                   {currentTestimonial.photoUrl ? (
                     <AvatarImage
                       src={currentTestimonial.photoUrl}
                       alt={currentTestimonial.name}
                     />
                   ) : (
-                    <AvatarFallback className="bg-[#9370DB] text-black retro-text">
+                    <AvatarFallback className="bg-white text-black retro-text">
                       {currentTestimonial.name.charAt(0)}
                     </AvatarFallback>
                   )}
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold text-[#9370DB] retro-text text-sm">
+                  <h3 className="font-semibold text-blue retro-text text-md">
                     {currentTestimonial.name}
                   </h3>
-                  <p className="text-xs text-[#9370DB] retro-text mt-1">
-                    {currentTestimonial.country}
-                  </p>
+                  
+
+                  
+                    <h3 className="flex items-center">
+                      <Briefcase className="w-4 h-4 mr-2 text-[#7DF9FF]" />
+                      <span>{currentTestimonial.position}</span>
+                    </h3>
+                    <h3 className="flex items-center">
+                      <Building2 className="w-4 h-4 mr-2 text-[#7DF9FF]" />
+                      <span>{currentTestimonial.company}</span>
+                    </h3>
+                    {currentTestimonial.school && (
+                      <h3 className="flex items-center">
+                        <GraduationCap className="w-4 h-4 mr-2 text-[#7DF9FF]" />
+                        <span>{currentTestimonial.school}</span>
+                      </h3>
+                    )}
+                    {currentTestimonial.linkedinUrl && (
+                      <h3 className="flex items-center">
+                        <FiLinkedin className="w-4 h-4 mr-2 text-[#7DF9FF]" />
+                        <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                          LinkedIn 
+                        </a>
+                      </h3>
+                    )}
+                 
+
                 </div>
-              </div>
-              <div className="space-y-2 text-xs text-[#9370DB] retro-text">
-                <div className="flex items-center">
-                  <Briefcase className="w-4 h-4 mr-2 text-[#9370DB]" />
-                  <span>{currentTestimonial.position}</span>
-                </div>
-                <div className="flex items-center">
-                  <Building2 className="w-4 h-4 mr-2 text-[#9370DB]" />
-                  <span>{currentTestimonial.company}</span>
-                </div>
-                {currentTestimonial.school && (
-                  <div className="flex items-center">
-                    <GraduationCap className="w-4 h-4 mr-2 text-[#9370DB]" />
-                    <span>{currentTestimonial.school}</span>
-                  </div>
-                )}
-                {currentTestimonial.linkedinUrl && (
-                  <div className="flex items-center">
-                    <FiLinkedin className="w-4 h-4 mr-2 text-[#9370DB]" />
-                    <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                )}
+                
+              
+              
               </div>
               <div className="mt-6 flex justify-between">
                 <button 
@@ -209,6 +224,7 @@ export default function RetroTestimonialsSection() {
           </Card>
         </div>
       </div>
+      
     </section>
   );
 }

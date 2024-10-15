@@ -58,7 +58,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
             >
               {tech.name}
               {hoveredTech === tech.name && (
-                <span className="absolute top-1/2 left-full transform -translate-y-1/2 ml-2 px-2 py-1 bg-purple-200 text-black text-xs border-2 border-black z-10 font-['Press_Start_2P'] whitespace-nowrap">
+                <span className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-40 bg-purple-200 text-black text-xs border-2 border-black z-10 font-['Press_Start_2P'] p-2">
                   {tech.description}
                 </span>
               )}
@@ -355,7 +355,7 @@ const ProjectsSection: React.FC = () => {
           <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
             <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
               <span className="relative z-10 glitch" data-text="My Projects">
-                PROJECT DASHBOARD
+                PROJECT BOARD
               </span>
             </h2>
           </div>

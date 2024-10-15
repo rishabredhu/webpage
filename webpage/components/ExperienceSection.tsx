@@ -159,7 +159,7 @@ export default function ExperienceSection() {
         <div className="flex justify-center mt-8">
           <Button
             onClick={() => setShowAllExperiences(!showAllExperiences)}
-            className="bg-purple-500 hover:bg-blue-600 text-white font-bold py-2 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none transition-all duration-150 ease-in-out"
+            className="bg-purple-500 hover:bg-blue-600 text-white font-bold py-2 px-4 border-2 border-black font-['Press_Start_2P'] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none transition-all duration-150 ease-in-out"
           >
             <span className="text-xs pixelated">
               {showAllExperiences ? "Show Less" : "CTRL + H"}
