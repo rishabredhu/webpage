@@ -16,9 +16,9 @@ import { Canvas } from '@react-three/fiber';
 import KinectPointCloud from "@/components/ui/KineticPointCloud";
 import { Vector3 } from 'three'; 
 import ClaudeCube from "@/components/ui/3D-UI/cube_claude"
-import California3D from "@/components/ui/3D-UI/shapes"
 
-
+import VoidCube from "@/components/ui/3D-UI/voidCube"
+import Cube from "@/components/ui/3D-UI/cube"
 
 
 
@@ -100,14 +100,9 @@ export default function HomePage() {
         </div>
       ))}
       
-      {/* 3D Model Section */}
-      {/* <div className="relative h-[50vh] md:h-[70vh] lg:h-[80vh]">
-      <ThreeDHome />
-      </div> */}
-
-      
-      <ClaudeCube />
-     {/* <California3D /> */}
+   
+      {/* <ClaudeCube /> */}
+      <Cube />
     
 
       
