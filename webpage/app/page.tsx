@@ -9,11 +9,25 @@ import SkillsSection from "../components/SkillsSection";
 import ExperienceSection from "../components/ExperienceSection";
 import TestimonialsSection from "../components/TestimonialsSection";
 import Chatbot from "../components/ui/retro-chatbot";
-
+import ThreeDHome from "../components/ui/3dHome";
 import LiquidBorder from "@/components/ui/LiquidBorder";
 import Scene from "@/components/ui/3dHome"
 import { Canvas } from '@react-three/fiber';
 import KinectPointCloud from "@/components/ui/KineticPointCloud";
+import { Vector3 } from 'three'; 
+import ClaudeCube from "@/components/ui/3D-UI/cube_claude"
+import California3D from "@/components/ui/3D-UI/shapes"
+
+
+
+
+
+
+
+
+
+
+
 
 const DynamicBackground = dynamic(() => import("@/components/ui/DynamicBackground"), { ssr: false });
 
@@ -77,30 +91,35 @@ export default function HomePage() {
   const modelProps = get3DModelProps();
 
   return (
-    <>
-    
+    <div className="relative">
       <LiquidBorder />
       <Chatbot />
       {[AboutSection, ExperienceSection, ProjectsSection, SkillsSection].map((Section, index) => (
-        <div key={index} ref={(el) => { sectionRefs.current[index + 1] = el; }}>
+        <div key={index} ref={(el) => { sectionRefs.current[index + 1] = el; }} className="relative">
           <Section />
         </div>
       ))}
       
       {/* 3D Model Section */}
       {/* <div className="relative h-[50vh] md:h-[70vh] lg:h-[80vh]">
-      <Scene />
+      <ThreeDHome />
       </div> */}
+
       
-      <div ref={(el) => { sectionRefs.current[4] = el; }}>
+      <ClaudeCube />
+     {/* <California3D /> */}
+    
+
+      
+      <div ref={(el) => { sectionRefs.current[4] = el; }} className="relative">
         <TestimonialsSection />
       </div>
 
-      <div className="retro-card rounded-none overflow-hidden w-full p-8 bg-white mb-8" style={{ height: '500px' }}>
-            <Canvas>
-              <KinectPointCloud />
-            </Canvas>
-          </div>
-    </>
+      <div className="retro-card rounded-none overflow-hidden w-full p-8 bg-white mb-8 relative" style={{ height: '500px' }}>
+        <Canvas>
+          <KinectPointCloud />
+        </Canvas>
+      </div>
+    </div>
   );
 }

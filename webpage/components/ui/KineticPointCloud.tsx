@@ -3,7 +3,6 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useControls, Leva } from "leva";
 
 const vertexShader = `
   uniform sampler2D map;
@@ -56,13 +55,6 @@ const KinectPointCloud: React.FC = () => {
     return new THREE.VideoTexture(video);
   }, []);
 
-  const { nearClipping, farClipping, pointSize, zOffset } = useControls({
-    nearClipping: { value: 350, min: 1, max: 10000 },
-    farClipping: { value: 1800, min: 1, max: 10000 },
-    pointSize: { value: 2.18, min: 1, max: 10 },
-    zOffset: { value: 960, min: 0, max: 4000 },
-  }, { collapsed: true, position: { x: 0, y: window.innerHeight - 300 } });
-
   const geometry = useMemo(() => {
     const width = 640,
       height = 480;
@@ -81,12 +73,12 @@ const KinectPointCloud: React.FC = () => {
       map: { value: videoTexture },
       width: { value: 640 },
       height: { value: 480 },
-      nearClipping: { value: nearClipping },
-      farClipping: { value: farClipping },
-      pointSize: { value: pointSize },
-      zOffset: { value: zOffset },
+      nearClipping: { value: 350 },
+      farClipping: { value: 1800 },
+      pointSize: { value: 2.18 },
+      zOffset: { value: 960 },
     }),
-    [videoTexture, nearClipping, farClipping, pointSize, zOffset],
+    [videoTexture],
   );
 
   useFrame(() => {

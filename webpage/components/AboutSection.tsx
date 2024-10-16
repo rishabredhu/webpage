@@ -4,23 +4,28 @@ import React, { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Ensure lucide-react is installed
 import Link from "next/link"; // For better client-side routing
 import ReactTypingEffect from 'react-typing-effect'; // Ensure you have this import
-
-
-
+import { Linkedin, Mail, FileText, Github } from 'lucide-react';
 
 const AboutSection: React.FC = () => {
+
+  const links = [
+    { href: "https://www.linkedin.com/in/rishabredhuu/", icon: Linkedin, text: "LinkedIn", color: "blue" },
+    { href: "mailto:rishabredhu@gmail.com", icon: Mail, text: "Email", color: "green" },
+    { href: "https://www.dropbox.com/scl/fi/h9ouwbbyk5thax8n019hp/Rishab_Singh_FT_resume.pdf?rlkey=vi7k4jugptph2eckbasltwyj5&st=pji82opg&dl=0", icon: FileText, text: "Resume", color: "red" },
+  ];
+
   // Recent Activity State
   const activities = [
-    
     "Attended an intensive workshop on advanced React techniques",
     "Learning how to make Music with AI",
     "Participated in the AGI Hack House Meetup in San Francisco",
     "Engaged in the AI Agent Hack event in NYC",
     "Networked at the Tech Networking Mixer in San Francisco",
     "Joined the Generative AI Bay Area Meetup in Sunnyvale",
-    "Pitched at the Startup Pitch Night in Palo Alto",
+    "Learning Calisthenics",
   ];
   const [currentActivity, setCurrentActivity] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false); // New state to control animation
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,6 +43,7 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
+    
     <section
       className="bg-white py-10 relative px-4 sm:px-6 lg:px-8"
       aria-labelledby="about-section-title">
@@ -188,39 +194,31 @@ const AboutSection: React.FC = () => {
             </p>
           </div>
 
-          
-            {/* Personal Interests Block */}
-            {/* <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
-              <p className="text-sm leading-relaxed font-['Press_Start_2P']">
-                I am passionate about — <strong><span className="text-red-500">development</span></strong>, <strong><span className="text-red-500">design</span></strong>, and <strong><span className="text-red-500">sports</span></strong>. Early on, I realized I'm a visual thinker, which naturally led me to CS as a means to  bring ideas to life. I'm particularly strong in spatial reasoning, allowing me to see how different pieces fit together. This helps me simplify complex problems—whether I'm coding algorithms, working with neural networks, or designing systems.
-              </p>
-            </div> */}
-             <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
-      <ReactTypingEffect
-        text={interestsText}
-        speed={50}
-        eraseSpeed={1}
-        eraseDelay={10}
-        typingDelay={1}
-        className="text-sm leading-relaxed font-['Press_Start_2P']"
-        cursorRenderer={cursor => <span className="text-red-500">{cursor}</span>}
-        displayTextRenderer={(text, i) => {
-          return (
-            <p>
-              {text.split('').map((char, i) => {
-                const key = `${i}`;
-                if (char === 'development' || char === 'design' || char === 'sports') {
-                  return <strong key={key} className="text-red-500">{char}</strong>;
-                }
-                return <span key={key}>{char}</span>;
-              })}
-            </p>
-          );
-        }}
-      />
-    </div>
-          
-
+          {/* Personal Interests Block */}
+          <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+            <ReactTypingEffect
+              text={interestsText}
+              speed={50}
+              eraseSpeed={1}
+              eraseDelay={10}
+              typingDelay={1}
+              className="text-sm leading-relaxed font-['Press_Start_2P']"
+              cursorRenderer={cursor => <span className="text-red-500">{cursor}</span>}
+              displayTextRenderer={(text, i) => {
+                return (
+                  <p>
+                    {text.split('').map((char, i) => {
+                      const key = `${i}`;
+                      if (char === 'development' || char === 'design' || char === 'sports') {
+                        return <strong key={key} className="text-red-500">{char}</strong>;
+                      }
+                      return <span key={key}>{char}</span>;
+                    })}
+                  </p>
+                );
+              }}
+            />
+          </div>
           
           {/* Hobbies and Contact Block */}
           <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
@@ -228,16 +226,16 @@ const AboutSection: React.FC = () => {
               When I'm not coding, you'll find me tuning into the{" "}
               <a
                 href="https://www.morningbrew.com/daily"
-                className="text-blue-500 hover:underline"
+                className="text-red-500 hover:underline"
               >
-                Morning Brew Podcast
+                [Morning Brew Podcast]
               </a>
               , listening to some{" "}
               <a
                 href="https://en.wikipedia.org/wiki/House_music"
                 className="text-orange-500 hover:underline"
               >
-                House music
+                [House music]
               </a>
               , or exploring the city with my dog,{" "}
               <span className="text-brown-500">Mylo Singh</span>, in search of good Coffee. Currently, I'm channeling my passion into building a startup and am always keen to connect with like-minded individuals. Feel free to{" "}
@@ -256,26 +254,40 @@ const AboutSection: React.FC = () => {
             {/* Recent Activity Section */}
             <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
               <h3 className="text-2xl font-['Press_Start_2P'] mb-4">Recent Activity</h3>
-                <div className="relative h-auto overflow-hidden mb-4">
-                <div className="relative w-full transition-opacity duration-500 font-['Press_Start_2P'] text-center bg-purple-200 p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+              <div className="relative h-[150px] overflow-hidden mb-4">
+                <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 font-['Press_Start_2P'] text-center bg-purple-200 p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
                   {activities[currentActivity]}
                 </div>
-                </div>
-          
+              </div>
             </div>
-
-
-          </div> 
-
-          
-
-          
+            
+            {/* Portfolio Links Section */}
+            <div className="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] rounded-lg">
+              <h3 className="text-3xl font-['Press_Start_2P'] mb-6 text-center">Connect With Me</h3>
+              <div className="flex flex-col space-y-4">
+                {[...links, { href: "https://github.com/rishabredhu", icon: Github, text: "GitHub", color: "purple" }].map((link, index) => {
+                  const colors = ['blue', 'green', 'red', 'purple'];
+                  const color = colors[index % colors.length];
+                  return (
+                    <a
+                      key={index}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center justify-center space-x-3 py-3 px-2 text-${color}-600 rounded-md transition-all duration-300 hover:bg-${color}-200 hover:shadow-md font-['Press_Start_2P'] text-sm`}
+                    >
+                      <link.icon className="w-5 h-5" />
+                      <span>{link.text}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </main>
-        
-
       </div>
-  </section>
-);
+    </section>
+  );
 };
 
 export default AboutSection;

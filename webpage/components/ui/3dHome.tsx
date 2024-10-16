@@ -1,176 +1,155 @@
-import React, { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+/* Start of Selection */
+'use client'
+import React, { useRef, Suspense, useEffect } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, useAnimations, useGLTF, PerspectiveCamera } from '@react-three/drei'
+import { Mesh, Vector3, BoxGeometry, EdgesGeometry, LineSegments, LineBasicMaterial } from 'three'
+import { GLTF } from 'three-stdlib'
+import * as THREE from 'three'
 
-const Scene: React.FC = () => {
-  // Refs and state setup
-  const mountRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [cameraDetails, setCameraDetails] = useState<string>('Camera Position: x=-0.95, y=0.51, z=1.88');
-  const [modelDetails, setModelDetails] = useState<string>('Model Center: x=0, y=0, z=0, Size: x=0, y=0, z=0');
-  const modelRef = useRef<THREE.Group | null>(null);
-  const boxHelperRef = useRef<THREE.BoxHelper | null>(null);
+// Define the type for our GLTF result
+type GLTFResult = GLTF & {
+  nodes: {
+    Desk: Mesh
+  }
+  materials: {
+    Desk: THREE.Material
+  }
+}
+
+// Preload the Desk model
+useGLTF.preload("/3d-assets/night-desk.glb")
+
+// Editable Properties
+const EDITABLE_PROPERTIES = {
+  DESK_SCALE: new Vector3(1.5, 1.5, 1.5),
+  DESK_POSITION: new Vector3(-0.5, -10.5, 10), // New desk position variable
+  DESK_ROTATION: new Vector3(37, 2, 29), // Rotate 37 degrees X, 2 degrees Y, 29 degrees Z
+  CUBOID_SIZE: new Vector3(4, 3, 2),
+  CAMERA_POSITION: new Vector3(1, 1, 1) // Camera facing positive z direction
+}
+
+function WiredCuboid({ size }: { size: Vector3 }) {
+  const geometry = new BoxGeometry(size.x, size.y, size.z)
+  const edges = new EdgesGeometry(geometry)
+  const material = new LineBasicMaterial({ color: 'black' })
+
+  return <lineSegments geometry={edges} material={material} />
+}
+
+function Desk() {
+  const deskRef = useRef<Mesh>(null)
+  const { scene, animations } = useGLTF("/3d-assets/desk.glb") as GLTFResult
+  const { actions } = useAnimations(animations, deskRef)
   
-  useEffect(() => {
-    // Scene setup
-    const scene = new THREE.Scene();
-
-    // Camera setup
-    const camera = new THREE.PerspectiveCamera(
-      75, // Field of view
-      window.innerWidth / window.innerHeight, // Aspect ratio
-      0.1, // Near clipping plane
-      1000 // Far clipping plane
-    );
-    camera.position.set(0, 5, 10); // Ensure the camera is positioned to view the model
-    camera.lookAt(scene.position); // Make the camera look at the center of the scene
-
-    // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight); // Set renderer size to window size
-    renderer.setClearColor(0xffffff); // Set background color to white
-    mountRef.current?.appendChild(renderer.domElement); // Append renderer to the DOM
-
-    // OrbitControls setup
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // Enable damping (inertia)
-    controls.dampingFactor = 0.25; // Damping factor
-    controls.screenSpacePanning = false; // Do not allow panning in screen space
-    controls.minDistance = 1; // Minimum distance for zoom
-    controls.maxDistance = 500; // Maximum distance for zoom
-
-    // Lighting setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Adjust light intensity
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Adjust light intensity
-    directionalLight.position.set(5, 5, 5); // Set a position that illuminates the scene
-    scene.add(directionalLight);
-
-    // Helper axes
-    const axesHelper = new THREE.AxesHelper(5); // Axes helper to visualize the axes
-    scene.add(axesHelper);
-
-    // Model loading
-    const loader = new GLTFLoader();
-    loader.load(
-      '3d-assets/night-desk.glb', // Path to the 3D model
-      (gltf) => {
-        const model = gltf.scene;
-        modelRef.current = model;
-        scene.add(model);
-
-        // Handle non-power-of-two textures
-        model.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            const material = (child as THREE.Mesh).material;
-            // Check if material is an array and handle accordingly
-            if (Array.isArray(material)) {
-              material.forEach(mat => {
-                if (mat instanceof THREE.MeshStandardMaterial && mat.map) {
-                  mat.map.wrapS = THREE.ClampToEdgeWrapping;
-                  mat.map.wrapT = THREE.ClampToEdgeWrapping;
-                  mat.map.minFilter = THREE.LinearFilter; // Disable mipmaps for NPOT textures
-                }
-              });
-            } else if (material instanceof THREE.MeshStandardMaterial && material.map) {
-              material.map.wrapS = THREE.ClampToEdgeWrapping;
-              material.map.wrapT = THREE.ClampToEdgeWrapping;
-              material.map.minFilter = THREE.LinearFilter; // Disable mipmaps for NPOT textures
-            }
-          }
-        });
-
-        // Calculate bounding box
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-
-        // Center the model
-        model.position.sub(center);
-
-        // Increase the size of the model to 10
-        model.scale.set(10, 10, 10);
-
-        // Add bounding box helper
-        const boxHelper = new THREE.BoxHelper(model, 0x000000); // Black bounding box
-        boxHelperRef.current = boxHelper;
-        scene.add(boxHelper);
-
-        // Update camera to focus on the model
-        const maxDim = Math.max(size.x, size.y, size.z) * 10; // Adjust maxDim to account for the increased size
-        const fov = camera.fov * (Math.PI / 180);
-        const cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        camera.position.set(cameraZ, cameraZ, cameraZ); // Position the camera to fit the model
-        camera.lookAt(scene.position); // Make the camera look at the center of the scene
-
-        setModelDetails(`Model Center: x=0, y=0, z=0, Size: x=${size.x * 10}, y=${size.y * 10}, z=${size.z * 10}`);
-        setError(null); // Clear error state if model loads successfully
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded'); // Log loading progress
-      },
-      (error) => {
-        console.error('An error occurred while loading the model:', error); // Log error
-        setError('Failed to load the 3D model.');
-      }
-    );
-
-    let time = 0;
-    let frameCount = 0;
-    const animate = () => {
-      requestAnimationFrame(animate);
-      time += 0.01;
-
-      // Hover effect for both model and box
-      if (modelRef.current && boxHelperRef.current) {
-        const hoverOffset = Math.sin(time) * 0.19; // Calculate hover offset
-        modelRef.current.position.y = hoverOffset; // Apply hover effect to model
-        boxHelperRef.current.position.y = hoverOffset; // Apply hover effect to bounding box
-      }
-
-      controls.update(); // Update controls
-
-      renderer.render(scene, camera); // Render the scene with the camera
-
-      // Update camera details every 60 frames for performance
-      frameCount++;
-      if (frameCount % 60 === 0) {
-        setCameraDetails(`Camera Position: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`);
-      }
-    };
-    animate();
-
-    // Handle window resizing
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight; // Update camera aspect ratio
-      camera.updateProjectionMatrix(); // Update camera projection matrix
-      renderer.setSize(window.innerWidth, window.innerHeight); // Update renderer size
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup function
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement); // Remove renderer from the DOM
-      }
-    };
-  }, []);
+  React.useEffect(() => {
+    if (actions["Idle"]) {
+      actions["Idle"].play()
+    }
+  }, [actions])
 
   return (
-    <>
-      <div>
-        <div ref={mountRef} />
-        {error && <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>}
-        <div style={{ position: 'absolute', top: '10px', left: '10px', color: 'black' }}>
-          <p>{cameraDetails}</p>
-          <p>{modelDetails}</p>
-        </div>
-      </div>
-    </>
-  );
-};
+    <group
+      position={EDITABLE_PROPERTIES.DESK_POSITION}
+      scale={EDITABLE_PROPERTIES.DESK_SCALE}
+      rotation={new THREE.Euler(
+        THREE.MathUtils.degToRad(EDITABLE_PROPERTIES.DESK_ROTATION.x),
+        THREE.MathUtils.degToRad(EDITABLE_PROPERTIES.DESK_ROTATION.y),
+        THREE.MathUtils.degToRad(EDITABLE_PROPERTIES.DESK_ROTATION.z)
+      )}
+    >
+      <mesh ref={deskRef}>
+        <primitive object={scene} />
+      </mesh>
+      <axesHelper args={[5]} />
+      <WiredCuboid size={EDITABLE_PROPERTIES.CUBOID_SIZE} />
+    </group>
+  )
+}
 
-export default Scene;
+function CanvasLoader() {
+  return (
+    <mesh>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="hotpink" />
+    </mesh>
+  )
+}
+
+const ThreeDHome: React.FC = () => {
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null)
+
+  useEffect(() => {
+    if (cameraRef.current) {
+      cameraRef.current.lookAt(EDITABLE_PROPERTIES.DESK_POSITION)
+    }
+  }, [])
+
+  return (
+    <div className="pixelated-container">
+      <Canvas className="pixelated-canvas">
+        <PerspectiveCamera
+          ref={cameraRef}
+          makeDefault
+          position={EDITABLE_PROPERTIES.CAMERA_POSITION}
+          fov={75}
+          near={0.1}
+          far={1000}
+        />
+        <Suspense fallback={<CanvasLoader />}>
+          <directionalLight position={[1, 1, 1]} intensity={2} />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 5, 10]} intensity={2} />
+          <spotLight
+            position={[0, 50, 10]}
+            angle={0.15}
+            penumbra={1}
+            intensity={2}
+          />
+          <hemisphereLight args={["#b1e1ff", "#000000", 1]} />
+          <Desk />
+        </Suspense>
+        <OrbitControls target={[
+          EDITABLE_PROPERTIES.DESK_POSITION.x, 
+          EDITABLE_PROPERTIES.DESK_POSITION.y, 
+          EDITABLE_PROPERTIES.DESK_POSITION.z
+        ]} />
+      </Canvas>
+      <style jsx>{`
+        .pixelated-container {
+          width: 600px;
+          height: 600px;
+          overflow: auto;
+          margin: 20px auto;
+          background-color: white;
+          border: 2px solid black;
+          box-shadow: 0 0 10px purple;
+          image-rendering: pixelated;
+        }
+        .pixelated-canvas {
+          width: 100% !important;
+          height: 100% !important;
+          image-rendering: pixelated;
+        }
+        /* Custom scrollbar styles */
+        .pixelated-container::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        .pixelated-container::-webkit-scrollbar-track {
+          background: #0a0a0a;
+        }
+        .pixelated-container::-webkit-scrollbar-thumb {
+          background: #00ff00;
+          border: 2px solid #0a0a0a;
+        }
+        .pixelated-container::-webkit-scrollbar-thumb:hover {
+          background: #00cc00;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+export default ThreeDHome
+

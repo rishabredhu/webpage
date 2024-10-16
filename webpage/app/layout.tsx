@@ -8,7 +8,7 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Rishab Singh',
   icons: {
-    icon: '/image/avatar.png', // or '/favicon.png', '/icon.svg' etc.
+    icon: '/avatar.png', // or '/favicon.png', '/icon.svg' etc.
   },
 }
 
@@ -23,9 +23,9 @@ export default function RootLayout({ children }: LayoutProps) {
         <link rel="icon" href="/image/avatar.png" />
       </Head>
       <body className="min-h-screen flex flex-col">
-        <div className="relative z-25">
+        {/* <div className="relative z-25">
           <Navbar />
-        </div>
+        </div> */}
         <main className="flex-grow">{children}</main>
         <Footer />
       </body>

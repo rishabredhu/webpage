@@ -164,7 +164,7 @@ const FallbackProjects: ProjectProps[] = [
   },
   {
     id: 'gaurd-vision',
-    "title": "Guard Vision",
+    "title": "Guard Vision (Team Lead)",
   "description": "Designed and deployed an end-to-end pipeline that processes video streams in real-time, performs anomaly detection, and triggers alerts for potential security breaches, ensuring timely response and mitigation. Implemented a custom face detection model to enhance the system's ability to identify and authenticate individuals, reducing false positives and improving overall security measures.",
   "technologies": [
     {
@@ -217,7 +217,7 @@ const FallbackProjects: ProjectProps[] = [
   },
   {
     id: "precision-agriculture",
-    title: "Precision Agriculture",
+    title: "Precision Agriculture (Co-Author)",
     description: "Implemented a WebRPC service in Go using gRPC for real-time sensor data transmission, improving crop yield by 15% and reducing water usage by 20%. Developed predictive models and statistical analysis in R for irrigation and fertilization schedules, achieving 20% resource optimization.",
     technologies: [
       {
