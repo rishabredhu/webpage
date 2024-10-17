@@ -12,7 +12,7 @@
       const links = [
         { href: "https://www.linkedin.com/in/rishabredhuu/", icon: Linkedin, text: "LinkedIn", color: "blue" },
         { href: "mailto:rishabredhu@gmail.com", icon: Mail, text: "Email", color: "green" },
-        { href: "https://www.dropbox.com/scl/fi/h9ouwbbyk5thax8n019hp/Rishab_Singh_FT_resume.pdf?rlkey=vi7k4jugptph2eckbasltwyj5&st=pji82opg&dl=0", icon: FileText, text: "Resume", color: "red" },
+        { href: "https://www.dropbox.com/scl/fi/m44w0zr8jozrjx3sb3dv5/Rishab_Singh_FT_resumee.pdf?rlkey=kfucqh7gh4kzn79ascg61ouyb&st=apzoruuc&dl=0", icon: FileText, text: "Resume", color: "red" },
       ];
     
       // Recent Activity State
@@ -173,7 +173,7 @@
     
           <div className="relative z-10 max-w-5xl mx-auto">
             {/* Header with Glitch Effect */}
-            <header className="flex items-center justify-center mb-8">
+            <header className="flex items-center  mb-8">
               <h2
                 className="text-5xl font-['Press_Start_2P'] text-black glitch"
                 data-text="Hi, it's Rishab here!"
@@ -225,7 +225,7 @@
               
               {/* Hobbies and Contact Block */}
               <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
-                <p className="text-sm leading-relaxed font-['Press_Start_2P'] text-justify">
+                <p className="text-sm leading-relaxed font-['Press_Start_2P'] text-">
                   When I'm not coding, you'll find me tuning into the{" "}
                   <a
                     href="https://www.morningbrew.com/daily"
@@ -258,7 +258,7 @@
                 <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
                   <h3 className="text-2xl font-['Press_Start_2P'] mb-4">Recent Activity</h3>
                   <div className="relative h-[150px] overflow-hidden mb-4">
-                    <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 font-['Press_Start_2P'] text-center bg-purple-200 p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+                    <div className="absolute inset-0 flex items-center  transition-opacity duration-500 font-['Press_Start_2P'] text-center bg-purple-200 p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
                       {activities[currentActivity]}
                     </div>
                   </div>
@@ -277,7 +277,7 @@
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`flex items-center justify-center space-x-3 py-3 px-2 text-${color}-600 rounded-md transition-all duration-300 hover:bg-${color}-200 hover:shadow-md font-['Press_Start_2P'] text-sm`}
+                          className={`flex items-center  space-x-3 py-3 px-2 text-${color}-600 rounded-md transition-all duration-300 hover:bg-${color}-200 hover:shadow-md font-['Press_Start_2P'] text-sm`}
                         >
                           <link.icon className="w-5 h-5" />
                           <span>{link.text}</span>

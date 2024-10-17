@@ -11,6 +11,7 @@ import ExperienceSection from "../components/ExperienceSection"
 import TestimonialsSection from "../components/TestimonialsSection"
 import LiquidBorder from "@/components/ui/LiquidBorder"
 import Cube from "@/components/ui/3D-UI/cube"
+import BlogSection from "@/components/BlogSection"
 
 const DynamicBackground = dynamic(() => import("@/components/ui/DynamicBackground"), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/Background"), { ssr: false })
