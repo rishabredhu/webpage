@@ -147,7 +147,7 @@ export default function SkillsSection() {
   // Array of skill categories
   const categories: SkillCategory[] =  [
     {
-      title: "ENTREPRENEURIAL SKILLS",
+      title: "ENTREPRENEURIAL ",
       skills: [
         {
           name: "Startup Development",
@@ -172,7 +172,7 @@ export default function SkillsSection() {
       ],
     },
     {
-      title: "RESEARCH SKILLS",
+      title: "RESEARCH ",
       skills: [
         {
           name: "Literature Review",
@@ -267,7 +267,7 @@ export default function SkillsSection() {
       ],
     },
     {
-      title: "Technical Skills",
+      title: "Technical ",
       skills: [
         {
           name: "SOFTWARE ENGINEERING",
@@ -533,8 +533,8 @@ export default function SkillsSection() {
         {/* <h2 className="font-['Press_Start_2P'] text-2xl mb-8 text-center">SKILLS</h2> Section title */}
         
         <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
-            <span className="relative z-10 glitch block text-center" data-text="My Projects">
-              Runtime Capabilities 
+            <span className="relative z-10 glitch block text-center" data-text="Skills">
+              Skills 
             </span>
           </h2>
         

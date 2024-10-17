@@ -32,7 +32,7 @@ export default function ExperienceSection() {
       title: "Software Engineer Fellow",
       company: "HeadStarter AI",
       startDate: new Date("2024-08-01"),
-      endDate: new Date("2024-09-31"),
+      endDate: new Date(), // Set to current date
       description:
         "Implemented projects integrating OpenAI API and Gemini API with Firebase backend and Next.js frontend.",
       image: "/images/headstarter.jpeg",

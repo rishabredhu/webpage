@@ -1,9 +1,9 @@
     // Start of Selection
     'use client'
     
-    import React, { useRef, Suspense, useEffect } from 'react'
+    import React, { useRef, Suspense, useEffect, useState } from 'react'
     import { Canvas, useFrame } from '@react-three/fiber'
-    import { OrbitControls, useGLTF, PerspectiveCamera } from '@react-three/drei'
+    import { OrbitControls, useGLTF, PerspectiveCamera, Html } from '@react-three/drei'
     import { useControls } from 'leva'
     import { GLTF } from 'three-stdlib'
     import * as THREE from 'three'
@@ -29,7 +29,7 @@
       DESK_POSITION: new THREE.Vector3(0, -2, 0),
       DESK_ROTATION: new THREE.Vector3(0, 0, 0),
       CUBOID_SIZE: new THREE.Vector3(15, 15, 15),
-      CAMERA_POSITION: new THREE.Vector3(10, 10, -10), // Zoomed in position
+      CAMERA_POSITION: new THREE.Vector3(20, 20, -20), // Zoomed in position
       HILBERT_CURVE_SIZE: 9,
       HILBERT_CURVE_ITERATIONS: 1.5,
       SPARKLE_COUNT: 5000,
@@ -46,13 +46,13 @@
         "/3d-assets/treeDesk.glb",
         "/3d-assets/desk.glb"
       ],
-      LIGHT_INTENSITY: 0.05, // Intensity of the directional light
+      LIGHT_INTENSITY: 0.005, // Intensity of the directional light
       FOG_DENSITY: 0.8, // Density of the fog
       SPARKLE_SIZE: 0.05, // Size of the sparkles
       BACKGROUND_COLOR: 'white', // Background color of the scene
       FOG_COLOR: 'white', // Color of the fog
       CAMERA_FOV: 45, // Field of view for the camera
-      AMBIENT_LIGHT_INTENSITY: 0.9, // Intensity of the ambient light
+      AMBIENT_LIGHT_INTENSITY: 0.1, // Intensity of the ambient light
       SPARKLE_PARTICLE_SIZE: 0.001, // Size of each sparkle particle
       MODEL_SIZES: { // Sizes for each model
         spaceman: new THREE.Vector3(1, 1, 1), // Size for spaceman model
@@ -192,7 +192,11 @@
     function Cube() {
       return (
         <div className="scene-container">
+          <div className="text-orange-400 font-bold text-lg">
+                        <GlitchText>UNDER CONSTRUCTION  </GlitchText><span>[--- ZOOM IN TOO SEE MORE]</span>
+                      </div>
           <Canvas>
+          
             <PerspectiveCamera
               makeDefault
               position={EDITABLE_PROPERTIES.CAMERA_POSITION}
@@ -201,7 +205,7 @@
               far={1000}
             />
             <Suspense fallback={null}>
-              <color attach="background" args={['white']} />
+              <color attach="background" args={['black']} />
               <fog attach="fog" args={['white', 20, 30]} />
               <directionalLight position={[5, 5, 5]} intensity={1} />
               <ambientLight intensity={0.5} />
@@ -214,6 +218,12 @@
                   <Module key={index} modelPath={modelPath} position={EDITABLE_PROPERTIES.MODULE_POSITIONS[index % EDITABLE_PROPERTIES.MODULE_POSITIONS.length]} />
                 ))}
               </group>
+
+                  {/* <Html style={{ position: 'absolute', top: '10px', right: '10px', pointerEvents: 'none', background: 'rgba(255, 255, 255, 0.2)', padding: '10px', borderRadius: '8px' }}>
+                      <div className="text-green-400 font-bold text-sm">
+                        <GlitchText>ZOOM IN</GlitchText>
+                      </div>
+                  </Html> */}
             </Suspense>
             <OrbitControls target={[0, 0, 0]} />
           </Canvas>
@@ -228,7 +238,28 @@
             }
           `}</style>
         </div>
+        
       )
     }
     
     export default Cube
+
+
+
+    const GlitchText: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+      const [glitchedText, setGlitchedText] = useState(children)
+    
+      useEffect(() => {
+        const glitchInterval = setInterval(() => {
+          const text = children?.toString() || ''
+          const glitchedChars = text.split('').map(char => {
+            return Math.random() < 0.1 ? String.fromCharCode(Math.floor(Math.random() * 26) + 65) : char
+          })
+          setGlitchedText(glitchedChars.join(''))
+        }, 100)
+    
+        return () => clearInterval(glitchInterval)
+      }, [children])
+    
+      return <span className="glitch">{glitchedText}</span>
+    }

@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Github, ExternalLink } from 'lucide-react';
+import { Github, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'; // Added Chevron imports
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,6 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Accordion, // Added Accordion imports
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"; // Added Accordion imports
 import { connectToDatabase } from '@/lib/mongodbClient';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -42,59 +48,69 @@ const ProjectCard: React.FC<ProjectProps> = ({
 
   return (
     <Card className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-      <CardHeader className="p-0"></CardHeader>
-      <CardContent className="p-4">
+      <CardHeader className="p-4">
         <CardTitle className="font-['Press_Start_2P'] text-lg mb-2">
           {title}
         </CardTitle>
-        <p className="font-['Courier_New'] text-sm mb-4">{description}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {technologies.map((tech) => (
-            <span
-              key={tech.name}
-              className="inline-block px-2 py-1 text-xs bg-black text-white relative"
-              onMouseEnter={() => setHoveredTech(tech.name)}
-              onMouseLeave={() => setHoveredTech(null)}
+      </CardHeader>
+      <CardContent className="p-4">
+      <div className="my-4 w-full h-px border-t-2 border-black border-dotted" />
+        <p className="font-['Courier_New'] text-md mb-4">{description}</p>
+
+        {/* <div className="my-4 w-full h-px border-t-2 border-black border-dotted" /> */}
+        {highlight && (
+          <p className="font-['Courier_New'] text-md font-bold mb-4">Highlight: {highlight}</p>
+        )}
+            
+            <p className="font-['Courier_New'] text-md font-bold mb-4 ">
+              Team Size: {team_size}
+            </p>
+            
+              <div className="my-4 w-full h-px border-t-2 border-black border-dotted" />
+        <Accordion type="single" collapsible className="w-full mb-4">
+          <AccordionItem value="technologies">
+            <AccordionTrigger className="font-['Press_Start_2P'] text-sm bg-gradient-to-r from-purple-800 to-orange-800 text-transparent bg-clip-text">
+              Technologies Used
+            </AccordionTrigger>
+            <AccordionContent>
+              {technologies.map((tech) => (
+                <div key={tech.name} className="mb-2">
+                  <h4 className="font-['Courier_New'] font-bold">{tech.name}</h4>
+                  <p className="font-['Courier_New'] text-sm">{tech.description}</p>
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <div className="flex flex-col sm:flex-row justify-between w-full mt-4 gap-4">
+          {github_url && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto text-xs border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
+              asChild
             >
-              {tech.name}
-              {hoveredTech === tech.name && (
-                <span className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-40 bg-purple-200 text-black text-xs border-2 border-black z-10 font-['Press_Start_2P'] p-2">
-                  {tech.description}
-                </span>
-              )}
-            </span>
-          ))}
+              <a href={github_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                <Github className="mr-2 h-4 w-4" />
+                <span>Github</span>
+              </a>
+            </Button>
+          )}
+          {research_url && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto text-xs border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
+              asChild
+            >
+              <a href={research_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                <ExternalLink className="mr-2 h-4 w-4" />
+                <span>Research</span>
+              </a>
+            </Button>
+          )}
         </div>
-        <p className="font-['Courier_New'] text-sm mb-4">{highlight}</p>
-        <p className="font-['Courier_New'] text-sm mb-4">
-          Team Size: {team_size}
-        </p>
-        <div className="flex flex-col sm:flex-row justify-between w-full mt-8 gap-4">
-      <Button
-        variant="outline"
-        size="lg"
-        className="w-full sm:w-auto text-sm border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
-        asChild
-      >
-        <a href={github_url ?? '#'} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-          <Github className="mr-2 h-5 w-5" />
-          <span>Github</span>
-        </a>
-      </Button>
-      {research_url && (
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full sm:w-auto text-sm border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
-          asChild
-        >
-          <a href={research_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-            <ExternalLink className="mr-2 h-5 w-5" />
-            <span>Research</span>
-          </a>
-        </Button>
-      )}
-    </div>
       </CardContent>
     </Card>
   );
@@ -334,13 +350,11 @@ const ProjectsSection: React.FC = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <section className="bg-white-200 py-20">
+      <section className="bg-white-200 py-20 text-justify">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center min-h-50 bg-transparent mb-6">
-            <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
-              <span className="relative z-10 glitch" data-text="My Projects">
-                PROJECT BOARD
-              </span>
+            <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 animate-gradient bg-transparent overflow-hidden text-center mb-8 break-reconstruct">
+              PROJECT BOARD
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

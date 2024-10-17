@@ -28,7 +28,7 @@ export default function RetroTestimonialsSection() {
     {
       name: "Vishwa Shah",
       feedback:
-        "Rishab's entrepreneurial spirit is truly inspiring. His dedication to research and his innovative approach in our startup endeavors have been pivotal in driving our projects forward. He's not only a brilliant engineer but also a visionary leader.",
+        "Working with Rishab since our undergrad days has been a wild ride. Between coding marathons, last-minute hackathon chaos, and our shared love for memes, we’ve pulled off some epic projects. If you're looking for someone who can write clean code while also cracking the best one-liners, Rishab is your guy!",
       position: "Product Manager",
       company: "Autodesk",
       school: "Cornell University",
@@ -39,10 +39,10 @@ export default function RetroTestimonialsSection() {
     {
       name: "Yash Bhojwani",
       feedback:
-        "Collaborating with Rishab on our research projects has been a remarkable experience. His analytical skills and problem-solving abilities greatly contributed to the success of our work. Rishab is a reliable and insightful research partner.",
+        "Rishab and I published three research papers in one year—let that sink in. His perseverance is something even Marvel heroes would envy. Every time we hit a roadblock, Rishab found a way to break through it with his 'never say die' attitude. Future research partners, buckle up—you’re in for a ride!",
       position: "Data Scientist",
       company: "Nucleix",
-      school: "NorthEastern University",
+      school: "Northeastern University",
       photoUrl: "/images/yash.jpeg",
       linkedinUrl: "https://www.linkedin.com/in/yashbhojwani/",
       country: "United States",
@@ -50,7 +50,7 @@ export default function RetroTestimonialsSection() {
     {
       name: "Rachana DeReddy",
       feedback:
-        "Working alongside Rishab on our research initiatives has been highly productive. His technical expertise and collaborative nature make him an exceptional research partner. Rishab consistently brings innovative ideas to the table.",
+        "Between setting up sensor networks and crunching data, Rishab somehow managed to make data engineering fun (yes, fun!). Our project involved so much debugging that by the end, we were practically speaking in code. Rishab has an uncanny ability to turn complex problems into smooth solutions—and make you laugh in the process.",
       position: "AI/ML Engineer",
       company: "Apple",
       school: "Columbia University",
@@ -61,7 +61,7 @@ export default function RetroTestimonialsSection() {
     {
       name: "Eashan Kaushik",
       feedback:
-        "Rishab has been an invaluable partner across multiple projects. His versatility and commitment ensure that every project we undertake is executed flawlessly. Whether it's a small task or a large initiative, Rishab always delivers exceptional results.",
+        "Balancing NYU coursework, internships, personal projects, and research? Easy, if you’re Rishab. His time management skills are next-level—he once finished a paper, a full project, and aced finals all in the same week. If you need someone who can juggle it all and still make it to brunch on time, look no further.",
       position: "Solution Architect",
       company: "Amazon",
       school: "New York University",
@@ -70,6 +70,7 @@ export default function RetroTestimonialsSection() {
       country: "United States",
     },
   ];
+  
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [displayedFeedback, setDisplayedFeedback] = useState("");
@@ -77,7 +78,7 @@ export default function RetroTestimonialsSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 5000); // Change testimonial every 5 seconds
+    }, 12000); // Change testimonial every 5 seconds
 
     return () => clearInterval(interval);
   }, [testimonials.length]);
@@ -90,12 +91,13 @@ export default function RetroTestimonialsSection() {
   const currentTestimonial = testimonials[currentTestimonialIndex];
 
   return (
-    <section className="py-20 bg-white text-[#9370DB] font-mono">
+    <section className="py-20 bg-white text-white font-mono rounded-lg">
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         
         .retro-text {
           font-family: 'Press Start 2P', cursive;
+          color: white;
         }
         
         .retro-button {
@@ -113,16 +115,18 @@ export default function RetroTestimonialsSection() {
         .retro-button:hover {
           transform: translate(-2px, -2px);
           box-shadow: 6px 6px 0px #000000;
+          bg: green;
         }
         
         .retro-button:active {
           transform: translate(2px, 2px);
           box-shadow: 2px 2px 0px #000000;
+          color: white;
         }
 
         .retro-card {
           background: #000000;
-          box-shadow: 8px 8px 0px #7DF9FF;
+          box-shadow: 8px 8px 0px green;
         }
       `}</style>
       <div className="container mx-auto px-4">
@@ -132,7 +136,7 @@ export default function RetroTestimonialsSection() {
           transition={{ duration: 0.5 }}
           className="text-3xl font-bold mb-12 text-center retro-text"
         >
-          &lt;What Others Say&gt;
+          &lt;Testimonials&gt;
         </motion.h2>
         <div className="flex justify-center items-start space-x-8">
         
@@ -166,34 +170,36 @@ export default function RetroTestimonialsSection() {
                   )}
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold text-blue retro-text text-md">
+                  <h3 className="font-semibold retro-text text-md">
                     {currentTestimonial.name}
                   </h3>
                   
 
-                  
-                    <h3 className="flex items-center">
-                      <Briefcase className="w-4 h-4 mr-2 text-[#7DF9FF]" />
-                      <span>{currentTestimonial.position}</span>
-                    </h3>
-                    <h3 className="flex items-center">
-                      <Building2 className="w-4 h-4 mr-2 text-[#7DF9FF]" />
-                      <span>{currentTestimonial.company}</span>
-                    </h3>
-                    {currentTestimonial.school && (
-                      <h3 className="flex items-center">
-                        <GraduationCap className="w-4 h-4 mr-2 text-[#7DF9FF]" />
-                        <span>{currentTestimonial.school}</span>
-                      </h3>
-                    )}
-                    {currentTestimonial.linkedinUrl && (
-                      <h3 className="flex items-center">
-                        <FiLinkedin className="w-4 h-4 mr-2 text-[#7DF9FF]" />
-                        <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
-                          LinkedIn 
-                        </a>
-                      </h3>
-                    )}
+
+                      
+    <h3 className="flex items-center">
+      <Briefcase className="w-4 h-4 mr-2 retro-text-white" />
+      <span>{currentTestimonial.position}</span>
+    </h3>
+    <h3 className="flex items-center">
+      <Building2 className="w-4 h-4 mr-2 retro-text-white" />
+      <span>{currentTestimonial.company}</span>
+    </h3>
+    {currentTestimonial.school && (
+      <h3 className="flex items-center">
+        <GraduationCap className="w-4 h-4 mr-2 retro-text-white" />
+        <span>{currentTestimonial.school}</span>
+      </h3>
+    )}
+    {currentTestimonial.linkedinUrl && (
+      <h3 className="flex items-center">
+        <FiLinkedin className="w-4 h-4 mr-2 retro-text-white" />
+        <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
+          Linkedin 
+        </a>
+      </h3>
+    )}
+                    
                  
 
                 </div>

@@ -15,6 +15,14 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/page/api/chatbot',
+        destination: 'https://rishabredhu.com/page/api/chatbot',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

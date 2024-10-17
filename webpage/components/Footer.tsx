@@ -2,7 +2,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-white-100 dark:bg-white-800 py-2">
+    <footer className="bg-white-100 dark:bg-white-800 py-4">
       <div className="container mx-auto px-2">
         <div className="flex justify-center space-x-6">
           <a
@@ -20,7 +20,7 @@ export default function Footer() {
             <FaLinkedin className="text-2xl hover:text-blue-600" />
           </a>
           <a
-            href="https://twitter.com/r3dhu"
+            href="https://twitter.com/r3dhuu"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -34,8 +34,8 @@ export default function Footer() {
             <FaEnvelope className="text-2xl hover:text-gray-600" />
           </a>
         </div>
-        <p className="text-center mt-4">
-          © 2023 Rishab Singh. All rights reserved.
+        <p className="text-center mt-2">
+          © 2024 Rishab Singh. All rights reserved.
         </p>
       </div>
     </footer>
