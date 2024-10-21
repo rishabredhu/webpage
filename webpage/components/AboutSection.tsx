@@ -22,7 +22,7 @@ const AboutSection: React.FC = () => {
       color: "orange",
     },
     {
-      href: "https://www.dropbox.com/scl/fo/iko96pxudlvp8c29fpo05/AGjXfqX7G-2tcEueUdDYxo0?rlkey=n2235n22qjttam8kzzcpo7k16&st=wbmdi2nt&dl=0",
+      href: "https://www.dropbox.com/scl/fo/iko96pxudlvp8c29fpo05/AGjXfqX7G-2tcEueUdDYxo0?rlkey=dcz92ynjf7n3mzx40ld1nvbt3&st=cyp763ep&dl=0",
       icon: FileText,
       text: "Resume",
       color: "orange",
