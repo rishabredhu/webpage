@@ -296,7 +296,7 @@ const AboutSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Recent Activity Section */}
             <div className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]">
-              <h3 className="text-2xl font-['Press_Start_2P'] mb-4 text-center">
+              <h3 className="text-2xl font-['Press_Start_2P'] mb-4 text-justify">
                 Recent Activity
               </h3>
               <div className="relative h-[150px] overflow-hidden mb-4">
@@ -308,19 +308,19 @@ const AboutSection: React.FC = () => {
               <div className="flex justify-center mb-4">
                 <a
                   // Start of Selection
-                  href="https://calendly.com/your-scheduling-link" // Replace with your actual scheduling link
+                  href="https://calendly.com/rishabredhu/exploratory-call" // Replace with your actual scheduling link
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white p-6 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] font-['Press_Start_2P'] text-sm hover:shadow-[0_0_15px_rgba(255,255,255,0.7)] hover:bg-purple-200 transition duration-300"
+                  className="bg-white p-6 border-4 text-justify border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] font-['Press_Start_2P'] text-sm hover:shadow-[0_0_15px_rgba(255,255,255,0.7)] hover:bg-purple-200 transition duration-300"
                 >
-                  Click to Book a Call
+                  Schedule a Meeting
                 </a>
               </div>
             </div>
 
             {/* Portfolio Links Section */}
             <div className="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] rounded-lg">
-              <h3 className="text-3xl font-['Press_Start_2P'] mb-6 text-center">
+              <h3 className="text-3xl font-['Press_Start_2P'] mb-6 text-justify">
                 Connect With Me
               </h3>
               <div className="flex flex-col space-y-4">

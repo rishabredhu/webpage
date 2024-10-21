@@ -1,4 +1,3 @@
-// Start of Selection
 "use client";
 
 import React, { useRef, Suspense, useEffect, useState } from "react";
@@ -56,7 +55,7 @@ const EDITABLE_PROPERTIES = {
   SPARKLE_SIZE: 0.05, // Size of the sparkles
   BACKGROUND_COLOR: "white", // Background color of the scene
   FOG_COLOR: "white", // Color of the fog
-  CAMERA_FOV: 45, // Field of view for the camera
+  CAMERA_FOV: 75, // Field of view for the camera
   AMBIENT_LIGHT_INTENSITY: 0.1, // Intensity of the ambient light
   SPARKLE_PARTICLE_SIZE: 0.001, // Size of each sparkle particle
   MODEL_SIZES: {
@@ -219,10 +218,10 @@ function Module({
 function Cube() {
   return (
     <div className="scene-container">
-      <div className="text-orange-400 font-bold text-lg">
+      {/* <div className="text-orange-400 font-bold text-lg">
         <GlitchText>UNDER CONSTRUCTION </GlitchText>
-        <span>[--- ZOOM IN TOO SEE MORE]</span>
-      </div>
+        <span>[--- ZOOM IN TO SEE MORE]</span>
+      </div> */}
       <Canvas>
         <PerspectiveCamera
           makeDefault
@@ -264,12 +263,37 @@ function Cube() {
       </Canvas>
       <style jsx>{`
         .scene-container {
-          width: 800px;
-          height: 800px;
-          margin: 20px auto;
+          width: 100vw;
+          height: 100vh;
+          margin: 0;
+          padding: 0;
           background-color: white;
-          border: 2px solid #ffaa00;
-          box-shadow: 0 0 10px #ffaa00;
+          border: none;
+          box-shadow: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        canvas {
+          width: 100%;
+          height: 100%;
+        }
+
+        .text-orange-400 {
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 10;
+          text-align: center;
+        }
+
+        @media (max-width: 768px) {
+          .text-orange-400 {
+            font-size: 1rem;
+          }
         }
       `}</style>
     </div>

@@ -104,9 +104,9 @@ const SkillCategory = ({ title, skills }: SkillCategory) => {
 
   // Hard-coded skill
   const hardCodedSkill: Skill = {
-    name: "Tap me",
+    name: "Tap",
     description:
-      "You can see how these skills have been employed across different work that I have done.",
+      "Tap the skill",
   };
 
   // Combine hard-coded skill with existing skills
