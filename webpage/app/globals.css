@@ -54,7 +54,6 @@
   animation-delay: calc(0.1s * var(--index));
 }
 
-
 @keyframes gradient {
   0% {
     background-position: 0% 50%;

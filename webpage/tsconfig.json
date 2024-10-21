@@ -26,6 +26,12 @@
     },
     "typeRoots": ["./node_modules/@types", "./@types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/ui/3D-UI/cube_claude.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "components/ui/3D-UI/cube_claude.jsx"
+  ],
   "exclude": ["node_modules"]
 }

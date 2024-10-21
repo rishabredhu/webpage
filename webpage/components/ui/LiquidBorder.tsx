@@ -86,10 +86,10 @@ export default function LiquidBorder() {
     updateParticles();
     animate();
 
-    window.addEventListener('resize', updateParticles);
+    window.addEventListener("resize", updateParticles);
 
     return () => {
-      window.removeEventListener('resize', updateParticles);
+      window.removeEventListener("resize", updateParticles);
     };
   }, []);
 

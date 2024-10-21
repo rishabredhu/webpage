@@ -1,8 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../lib/mongodbClient";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  if (req.method === "GET") {
     try {
       const client = await connectToDatabase();
       const database = client.db("web-portfolio");
@@ -17,10 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).json(data);
     } catch (error) {
       console.error("Error fetching blog posts:", error);
-      res.status(500).json({ error: 'Failed to fetch blog posts' });
+      res.status(500).json({ error: "Failed to fetch blog posts" });
     }
   } else {
-    res.setHeader('Allow', ['GET']);
+    res.setHeader("Allow", ["GET"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import './ResponsiveOverlay.css'; // Create a CSS file for styling
+import React from "react";
+import "./ResponsiveOverlay.css"; // Create a CSS file for styling
 
 const ResponsiveOverlay: React.FC = () => {
   return (

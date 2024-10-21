@@ -18,8 +18,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/page/api/chatbot',
-        destination: 'https://rishabredhu.com/page/api/chatbot',
+        source: "/page/api/chatbot",
+        destination: "https://rishabredhu.com/page/api/chatbot",
       },
     ];
   },

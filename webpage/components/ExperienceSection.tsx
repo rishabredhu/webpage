@@ -110,7 +110,8 @@ export default function ExperienceSection() {
       company: "Astegic",
       startDate: new Date("2018-06-01"),
       endDate: new Date("2018-12-31"),
-      description: "Shadowed a software developer and worked on a website for a client.",
+      description:
+        "Shadowed a software developer and worked on a website for a client.",
       image: "/images/astegic.png",
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -132,25 +133,47 @@ export default function ExperienceSection() {
     : experiences.slice(0, 5);
 
   return (
-    <section id="experience" className="py-16 bg-white text-black font-['Courier_New']">
+    <section
+      id="experience"
+      className="py-16 bg-white text-black font-['Courier_New']"
+    >
       <div className="container mx-auto px-4">
         <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden text-center mb-8 break-reconstruct">
-          Experience
+          Work
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visibleExperiences.map((exp, index) => (
-            <Card key={index} className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <Card
+              key={index}
+              className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
               <CardHeader className="p-0"></CardHeader>
               <CardContent className="p-4">
                 <CardTitle className="font-['Press_Start_2P'] text-lg mb-2 flex items-center">
-                  {exp.image && <img src={exp.image} alt={exp.title} className="mr-2 w-8 h-8" />}
+                  {exp.image && (
+                    <img
+                      src={exp.image}
+                      alt={exp.title}
+                      className="mr-2 w-8 h-8"
+                    />
+                  )}
                   {exp.title}
                 </CardTitle>
                 <p className="font-['Courier_New'] text-sm mb-4">
                   {exp.company && `${exp.company} | `}
-                  {exp.startDate.toLocaleString('default', { month: 'short', year: 'numeric' })} - {exp.endDate.toLocaleString('default', { month: 'short', year: 'numeric' })}
+                  {exp.startDate.toLocaleString("default", {
+                    month: "short",
+                    year: "numeric",
+                  })}{" "}
+                  -{" "}
+                  {exp.endDate.toLocaleString("default", {
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </p>
-                <p className="font-['Courier_New'] text-sm mb-4">{exp.description}</p>
+                <p className="font-['Courier_New'] text-sm mb-4">
+                  {exp.description}
+                </p>
               </CardContent>
             </Card>
           ))}
@@ -162,7 +185,7 @@ export default function ExperienceSection() {
             size="md"
             className="text-xs border-2 border-black hover:bg-black hover:text-white transition-colors font-['Press_Start_2P']"
           >
-            {showAllExperiences ? "Show Less" : "CTRL + H"}
+            {showAllExperiences ? "Show Less" : "Show More"}
           </Button>
         </div>
       </div>

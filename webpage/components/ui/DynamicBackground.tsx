@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
-import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
+import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls.js";
 
 const DynamicBackground: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,14 +8,26 @@ const DynamicBackground: React.FC = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    let camera: THREE.PerspectiveCamera, controls: FirstPersonControls, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
-    let mesh: THREE.Mesh, geometry: THREE.PlaneGeometry, material: THREE.MeshBasicMaterial, clock: THREE.Clock;
+    let camera: THREE.PerspectiveCamera,
+      controls: FirstPersonControls,
+      scene: THREE.Scene,
+      renderer: THREE.WebGLRenderer;
+    let mesh: THREE.Mesh,
+      geometry: THREE.PlaneGeometry,
+      material: THREE.MeshBasicMaterial,
+      clock: THREE.Clock;
 
-    const worldWidth = 256, worldDepth = 256; // Increased resolution for smoother details
+    const worldWidth = 256,
+      worldDepth = 256; // Increased resolution for smoother details
 
     function init() {
-      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 20000);
-      camera.position.y =10;
+      camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight,
+        1,
+        20000,
+      );
+      camera.position.y = 10;
 
       clock = new THREE.Clock();
 
@@ -23,7 +35,12 @@ const DynamicBackground: React.FC = () => {
       scene.background = new THREE.Color(0xe0f7fa); // Lighter background color
       scene.fog = new THREE.FogExp2(0xe0f7fa, 0.0007); // Lighter fog
 
-      geometry = new THREE.PlaneGeometry(20000, 20000, worldWidth - 1, worldDepth - 1);
+      geometry = new THREE.PlaneGeometry(
+        20000,
+        20000,
+        worldWidth - 1,
+        worldDepth - 1,
+      );
       geometry.rotateX(-Math.PI / 2);
 
       const position = geometry.attributes.position;
@@ -36,19 +53,21 @@ const DynamicBackground: React.FC = () => {
         position.setY(i, y);
       }
 
-      const texture = new THREE.TextureLoader().load('/textures/water.jpg');
+      const texture = new THREE.TextureLoader().load("/textures/water.jpg");
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
       texture.repeat.set(5, 5); // Increased texture repeat for finer details
       texture.colorSpace = THREE.SRGBColorSpace;
 
-      const gradientTexture = new THREE.CanvasTexture(document.createElement('canvas'));
+      const gradientTexture = new THREE.CanvasTexture(
+        document.createElement("canvas"),
+      );
       const canvas = gradientTexture.image;
       canvas.width = 256;
       canvas.height = 256;
-      const context = canvas.getContext('2d');
+      const context = canvas.getContext("2d");
       const gradient = context.createLinearGradient(0, 0, 256, 256);
-      gradient.addColorStop(0, '#800080'); // Purple
-      gradient.addColorStop(1, '#80deea'); // Blueish green
+      gradient.addColorStop(0, "#800080"); // Purple
+      gradient.addColorStop(1, "#80deea"); // Blueish green
       context.fillStyle = gradient;
       context.fillRect(0, 0, 256, 256);
       gradientTexture.needsUpdate = true;
@@ -67,7 +86,7 @@ const DynamicBackground: React.FC = () => {
       controls.movementSpeed = 500; // Reduced movement speed for smoother control
       controls.lookSpeed = 0.01; // Reduced look speed for smoother control
 
-      window.addEventListener('resize', onWindowResize);
+      window.addEventListener("resize", onWindowResize);
     }
 
     function onWindowResize() {
@@ -103,12 +122,25 @@ const DynamicBackground: React.FC = () => {
     animate();
 
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener("resize", onWindowResize);
       containerRef.current?.removeChild(renderer.domElement);
     };
   }, []);
 
-  return <div ref={containerRef} style={{ position: 'fixed', bottom: '0', left: '50%', transform: 'translateX(-50%)', width: '100%', height: '20%', zIndex: -1 }} />;
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: "fixed",
+        bottom: "0",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "100%",
+        height: "20%",
+        zIndex: -1,
+      }}
+    />
+  );
 };
 
 export default DynamicBackground;

@@ -6,9 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Building2, GraduationCap, Briefcase } from "lucide-react";
-import { FiLinkedin } from 'react-icons/fi';
-import { Canvas } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
+import { FiLinkedin } from "react-icons/fi";
+import { Canvas } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import FloatingGLB from "@/components/ui/3dHome";
 import KinectPointCloud from "@/components/ui/KineticPointCloud"; // Add this import statement
 
@@ -70,14 +70,15 @@ export default function RetroTestimonialsSection() {
       country: "United States",
     },
   ];
-  
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [displayedFeedback, setDisplayedFeedback] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+      setCurrentTestimonialIndex(
+        (prevIndex) => (prevIndex + 1) % testimonials.length,
+      );
     }, 12000); // Change testimonial every 5 seconds
 
     return () => clearInterval(interval);
@@ -93,13 +94,13 @@ export default function RetroTestimonialsSection() {
   return (
     <section className="py-20 bg-white text-white font-mono rounded-lg">
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        
+        @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
         .retro-text {
-          font-family: 'Press Start 2P', cursive;
+          font-family: "Press Start 2P", cursive;
           color: white;
         }
-        
+
         .retro-button {
           background: white;
           color: #000;
@@ -111,13 +112,13 @@ export default function RetroTestimonialsSection() {
           transition: all 0.1s ease;
           box-shadow: 4px 4px 0px #000000;
         }
-        
+
         .retro-button:hover {
           transform: translate(-2px, -2px);
           box-shadow: 6px 6px 0px #000000;
-          bg: green;
+          bg: purple;
         }
-        
+
         .retro-button:active {
           transform: translate(2px, 2px);
           box-shadow: 2px 2px 0px #000000;
@@ -126,7 +127,7 @@ export default function RetroTestimonialsSection() {
 
         .retro-card {
           background: #000000;
-          box-shadow: 8px 8px 0px green;
+          box-shadow: 8px 8px 0px orange;
         }
       `}</style>
       <div className="container mx-auto px-4">
@@ -139,13 +140,11 @@ export default function RetroTestimonialsSection() {
           &lt;Testimonials&gt;
         </motion.h2>
         <div className="flex justify-center items-start space-x-8">
-        
-
           <Card className="retro-card rounded-none overflow-hidden w-full max-w-2xl">
             <CardContent className="p-8">
               <div className="bg-black p-2">
                 <FaQuoteLeft className="text-white text-4xl mb-6" />
-                <motion.p 
+                <motion.p
                   key={currentTestimonialIndex}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -156,8 +155,7 @@ export default function RetroTestimonialsSection() {
                 </motion.p>
               </div>
               <div className="flex items-center mb-4 bg-black p-2">
-              
-              <Avatar className="w-14 h-14 mr-4 rounded-none">
+                <Avatar className="w-14 h-14 mr-4 rounded-none">
                   {currentTestimonial.photoUrl ? (
                     <AvatarImage
                       src={currentTestimonial.photoUrl}
@@ -173,50 +171,56 @@ export default function RetroTestimonialsSection() {
                   <h3 className="font-semibold retro-text text-md">
                     {currentTestimonial.name}
                   </h3>
-                  
 
-
-                      
-    <h3 className="flex items-center">
-      <Briefcase className="w-4 h-4 mr-2 retro-text-white" />
-      <span>{currentTestimonial.position}</span>
-    </h3>
-    <h3 className="flex items-center">
-      <Building2 className="w-4 h-4 mr-2 retro-text-white" />
-      <span>{currentTestimonial.company}</span>
-    </h3>
-    {currentTestimonial.school && (
-      <h3 className="flex items-center">
-        <GraduationCap className="w-4 h-4 mr-2 retro-text-white" />
-        <span>{currentTestimonial.school}</span>
-      </h3>
-    )}
-    {currentTestimonial.linkedinUrl && (
-      <h3 className="flex items-center">
-        <FiLinkedin className="w-4 h-4 mr-2 retro-text-white" />
-        <a href={currentTestimonial.linkedinUrl} target="_blank" rel="noopener noreferrer" className="underline">
-          Linkedin 
-        </a>
-      </h3>
-    )}
-                    
-                 
-
+                  <h3 className="flex items-center">
+                    <Briefcase className="w-4 h-4 mr-2 retro-text-white" />
+                    <span>{currentTestimonial.position}</span>
+                  </h3>
+                  <h3 className="flex items-center">
+                    <Building2 className="w-4 h-4 mr-2 retro-text-white" />
+                    <span>{currentTestimonial.company}</span>
+                  </h3>
+                  {currentTestimonial.school && (
+                    <h3 className="flex items-center">
+                      <GraduationCap className="w-4 h-4 mr-2 retro-text-white" />
+                      <span>{currentTestimonial.school}</span>
+                    </h3>
+                  )}
+                  {currentTestimonial.linkedinUrl && (
+                    <h3 className="flex items-center">
+                      <FiLinkedin className="w-4 h-4 mr-2 retro-text-white" />
+                      <a
+                        href={currentTestimonial.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        Linkedin
+                      </a>
+                    </h3>
+                  )}
                 </div>
-                
-              
-              
               </div>
               <div className="mt-6 flex justify-between">
-                <button 
+                <button
                   className="retro-button retro-text text-xs"
-                  onClick={() => setCurrentTestimonialIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length)}
+                  onClick={() =>
+                    setCurrentTestimonialIndex(
+                      (prevIndex) =>
+                        (prevIndex - 1 + testimonials.length) %
+                        testimonials.length,
+                    )
+                  }
                 >
                   Previous
                 </button>
-                <button 
+                <button
                   className="retro-button retro-text text-xs"
-                  onClick={() => setCurrentTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonials.length)}
+                  onClick={() =>
+                    setCurrentTestimonialIndex(
+                      (prevIndex) => (prevIndex + 1) % testimonials.length,
+                    )
+                  }
                 >
                   Next
                 </button>
@@ -225,8 +229,6 @@ export default function RetroTestimonialsSection() {
           </Card>
         </div>
       </div>
-      
-      
     </section>
   );
 }

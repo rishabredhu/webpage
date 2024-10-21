@@ -23,65 +23,141 @@ interface SkillCategory {
 }
 
 // Component to display a category of skills
+// const SkillCategory = ({ title, skills }: SkillCategory) => {
+//   const [expandedSkill, setExpandedSkill] = useState<string | null>(null); // State to track which skill is expanded
+//   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null); // State to track which skill is hovered
+
+//   const isTechnicalSkills = title === "Technical Skills";
+
+//   const CardComponent = isTechnicalSkills ? ProjectCard : Card;
+//   const CardContentComponent = isTechnicalSkills
+//     ? ProjectCardContent
+//     : CardContent;
+//   const CardHeaderComponent = isTechnicalSkills
+//     ? ProjectCardHeader
+//     : CardHeader;
+//   const CardTitleComponent = isTechnicalSkills ? ProjectCardTitle : CardTitle;
+
+//   return (
+//     <CardComponent className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6">
+//       <CardHeaderComponent className="p-0"></CardHeaderComponent>{" "}
+//       {/* Empty CardHeader */}
+//       <CardContentComponent className="p-4">
+//         <CardTitleComponent className="text-lg mb-2">
+//           {title}
+//         </CardTitleComponent>{" "}
+//         {/* Displaying the title of the skill category */}
+//         <div className="flex flex-wrap gap-2 mb-4">
+//           {skills.map((skill) => (
+//             <div
+//               key={skill.name}
+//               className="relative"
+//               onMouseEnter={() => setHoveredSkill(skill.name)} // Set hovered skill on mouse enter
+//               onMouseLeave={() => setHoveredSkill(null)} // Reset hovered skill on mouse leave
+//             >
+//               <span
+//                 className={`inline-block px-2 py-1 text-xs cursor-pointer ${hoveredSkill === skill.name ? "bg-purple-500 text-white" : "bg-black text-white"}`}
+//                 onClick={() =>
+//                   setExpandedSkill(
+//                     expandedSkill === skill.name ? null : skill.name,
+//                   )
+//                 } // Toggle expanded skill on click
+//                 onKeyPress={(e) =>
+//                   e.key === "Enter" &&
+//                   setExpandedSkill(
+//                     expandedSkill === skill.name ? null : skill.name,
+//                   )
+//                 } // Toggle expanded skill on Enter key press
+//                 tabIndex={0} // Make the span focusable
+//                 role="button" // Define the role as button for accessibility
+//                 aria-expanded={expandedSkill === skill.name} // ARIA attribute to indicate if the skill is expanded
+//                 aria-controls={`desc-${skill.name}`} // ARIA attribute to link the span with the description div
+//               >
+//                 {skill.name} {/* Displaying the name of the skill */}
+//               </span>
+//               {expandedSkill === skill.name && (
+//                 <div
+//                   id={`desc-${skill.name}`}
+//                   className="absolute z-10 mt-1 p-2 bg-white border border-black text-xs font-['Courier_New'] max-w-xs"
+//                 >
+//                   {skill.description}{" "}
+//                   {/* Displaying the description of the skill */}
+//                 </div>
+//               )}
+//             </div>
+//           ))}
+//         </div>
+//       </CardContentComponent>
+//     </CardComponent>
+//   );
+// };
 const SkillCategory = ({ title, skills }: SkillCategory) => {
-  const [expandedSkill, setExpandedSkill] = useState<string | null>(null); // State to track which skill is expanded
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null); // State to track which skill is hovered
+  const [expandedSkill, setExpandedSkill] = useState<string | null>(null);
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   const isTechnicalSkills = title === "Technical Skills";
 
-  const CardComponent = isTechnicalSkills ? ProjectCard : Card;
-  const CardContentComponent = isTechnicalSkills
-    ? ProjectCardContent
-    : CardContent;
-  const CardHeaderComponent = isTechnicalSkills
-    ? ProjectCardHeader
-    : CardHeader;
-  const CardTitleComponent = isTechnicalSkills ? ProjectCardTitle : CardTitle;
+  const CardComponent = isTechnicalSkills ? Card : Card;
+  const CardContentComponent = isTechnicalSkills ? CardContent : CardContent;
+  const CardHeaderComponent = isTechnicalSkills ? CardHeader : CardHeader;
+  const CardTitleComponent = isTechnicalSkills ? CardTitle : CardTitle;
+
+  // Hard-coded skill
+  const hardCodedSkill: Skill = {
+    name: "Tap me",
+    description:
+      "You can see how these skills have been employed across different work that I have done.",
+  };
+
+  // Combine hard-coded skill with existing skills
+  const allSkills = [...skills, hardCodedSkill];
 
   return (
     <CardComponent className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6">
-      <CardHeaderComponent className="p-0"></CardHeaderComponent>{" "}
-      {/* Empty CardHeader */}
+      <CardHeaderComponent className="p-0"></CardHeaderComponent>
       <CardContentComponent className="p-4">
         <CardTitleComponent className="text-lg mb-2">
           {title}
-        </CardTitleComponent>{" "}
-        {/* Displaying the title of the skill category */}
+        </CardTitleComponent>
         <div className="flex flex-wrap gap-2 mb-4">
-          {skills.map((skill) => (
+          {allSkills.map((skill, index) => (
             <div
               key={skill.name}
               className="relative"
-              onMouseEnter={() => setHoveredSkill(skill.name)} // Set hovered skill on mouse enter
-              onMouseLeave={() => setHoveredSkill(null)} // Reset hovered skill on mouse leave
+              onMouseEnter={() => setHoveredSkill(skill.name)}
+              onMouseLeave={() => setHoveredSkill(null)}
             >
-              <span
-                className={`inline-block px-2 py-1 text-xs cursor-pointer ${hoveredSkill === skill.name ? "bg-purple-500 text-white" : "bg-black text-white"}`}
+              <button
+                className={`
+                  px-3 py-1.5 text-sm rounded-full
+                  transition-all duration-200 ease-in-out
+                  ${
+                    index === allSkills.length - 1
+                      ? "bg-purple-500 text-white shadow-md"
+                      : hoveredSkill === skill.name
+                        ? "bg-purple-500 text-white shadow-md transform scale-105"
+                        : "bg-black text-white"
+                  }
+                  hover:bg-purple-600 hover:shadow-lg
+                  active:bg-purple-700 active:shadow-inner active:transform active:scale-95
+                  focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+                `}
                 onClick={() =>
                   setExpandedSkill(
                     expandedSkill === skill.name ? null : skill.name,
                   )
-                } // Toggle expanded skill on click
-                onKeyPress={(e) =>
-                  e.key === "Enter" &&
-                  setExpandedSkill(
-                    expandedSkill === skill.name ? null : skill.name,
-                  )
-                } // Toggle expanded skill on Enter key press
-                tabIndex={0} // Make the span focusable
-                role="button" // Define the role as button for accessibility
-                aria-expanded={expandedSkill === skill.name} // ARIA attribute to indicate if the skill is expanded
-                aria-controls={`desc-${skill.name}`} // ARIA attribute to link the span with the description div
+                }
+                aria-expanded={expandedSkill === skill.name}
+                aria-controls={`desc-${skill.name}`}
               >
-                {skill.name} {/* Displaying the name of the skill */}
-              </span>
+                {skill.name}
+              </button>
               {expandedSkill === skill.name && (
                 <div
                   id={`desc-${skill.name}`}
-                  className="absolute z-10 mt-1 p-2 bg-white border border-black text-xs font-['Courier_New'] max-w-xs"
+                  className="absolute z-10 mt-2 p-3 bg-white border-2 border-black text-xs font-['Courier_New'] max-w-xs rounded shadow-md"
                 >
-                  {skill.description}{" "}
-                  {/* Displaying the description of the skill */}
+                  {skill.description}
                 </div>
               )}
             </div>
@@ -129,7 +205,7 @@ export function ScrollableCategories({
               hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] 
               active:shadow-none 
               transition-all duration-150 ease-in-out
-              ${currentIndex === index ? 'bg-blue-600' : ''}
+              ${currentIndex === index ? "bg-blue-600" : ""}
             `}
           >
             {category.name}
@@ -137,7 +213,8 @@ export function ScrollableCategories({
         ))}
       </div>
     </div>
-  );}
+  );
+}
 
 // Main component to display the skills section
 export default function SkillsSection() {
@@ -145,7 +222,7 @@ export default function SkillsSection() {
   const [showAllSkills, setShowAllSkills] = useState(false); // New state for showing all skills
 
   // Array of skill categories
-  const categories: SkillCategory[] =  [
+  const categories: SkillCategory[] = [
     {
       title: "ENTREPRENEURIAL ",
       skills: [
@@ -522,23 +599,16 @@ export default function SkillsSection() {
       ],
     },
   ];
-  
 
   return (
     <section className="py-16 bg-white text-black font-['Courier_New']">
-      
-      
-    
       <div className="container mx-auto px-4">
         {/* <h2 className="font-['Press_Start_2P'] text-2xl mb-8 text-center">SKILLS</h2> Section title */}
-        
-        <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-black bg-transparent overflow-hidden">
-            <span className="relative z-10 glitch block text-center" data-text="Skills">
-              Skills 
-            </span>
-          </h2>
-        
-        
+
+        <h2 className="relative px-8 py-3 text-5xl font-['Press_Start_2P'] text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-orange-300 animate-gradient bg-transparent overflow-hidden text-center mb-8 break-reconstruct">
+          Skills
+        </h2>
+
         <div className="flex justify-center">
           <ScrollableCategories
             categories={categories.map((cat) => ({
